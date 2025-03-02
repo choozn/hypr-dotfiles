@@ -1,0 +1,12 @@
+#!/bin/bash
+echo \
+'Suspend   | loginctl lock-session ${XDG_SESSION_ID-} & systemctl suspend
+Logout    | loginctl kill-session ${XDG_SESSION_ID-}
+Shutdown  | shutdown --poweroff 0
+Reboot    | shutdown --reboot 0
+Lock      | loginctl lock-session ${XDG_SESSION_ID-}
+Sleep     | systemctl hibernate'\
+| fzf +s --exact\
+| cut -d "|" -f2 \
+| xargs -i -t zsh -c "{}"\
+&>/dev/null

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+pkill swaybg
+# WALLPAPER='/home/lasse/.config/hypr/wallpapers/wallpaper.jpg'
+WALLPAPER='/home/lasse/.config/hypr/wallpapers/wallpaper.png'
+swaybg --output '*' --mode fill --image "$WALLPAPER"
