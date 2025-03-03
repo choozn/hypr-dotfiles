@@ -12,6 +12,32 @@ echo "[!] Starting installation of hypr-dotfiles by @choozn!"
 sudo -v || { echo "Failed to gain sudo access."; exit 1; }
 ( while true; do sudo -v; sleep 60; done ) &
 
+# Check permissions
+if [ ! -w "$HOME/.config" ]; then
+    echo "[!] You do not have write permissions for $HOME/.config. Please fix permissions and retry."
+    exit 1
+fi
+
+# Backup previous configs
+backupfolder="hypr_backup_$(date +'%Y-%m-%d_%H-%M-%S')"
+backuppath="$HOME/.config/$backupfolder"
+mkdir -p $backuppath
+
+# Check if .zshrc exists before copying
+if [ -f "$HOME/.zshrc" ]; then
+  cp "$HOME/.zshrc" "$backuppath/.zshrc"
+fi
+
+# Check if .config/hypr exists before copying
+if [ -d "$HOME/.config/hypr" ]; then
+  cp -r "$HOME/.config/hypr/" "$backuppath/hypr/"
+fi
+
+# Check if .config/alacritty exists before copying
+if [ -d "$HOME/.config/alacritty" ]; then
+  cp -r "$HOME/.config/alacritty/" "$backuppath/alacritty/"
+fi
+
 # Create installation folder
 if [ ! -d "$DIRECTORY" ]; then
 mkdir hyprinstall
@@ -19,7 +45,7 @@ fi
 cd hyprinstall
 
 # Install dependencies to install
-sudo pacman --noconfirm -S --needed git base-devel
+sudo pacman --noconfirm -S --needed git base-devel || { echo "Failed to install git or base-devel. Exiting."; exit 1; }
 
 # Copy repository
 git clone $repository
@@ -30,29 +56,30 @@ rm $HOME/.config/hypr/install.sh
 
 # Install yay
 # Reference: https://github.com/Jguer/yay
-git clone https://aur.archlinux.org/yay.git
+command -v yay >/dev/null 2>&1 || {
+git clone https://aur.archlinux.org/yay.git || { echo "Failed to clone yay repository. Exiting."; exit 1; }
 cd yay
-makepkg -si
+makepkg -si || { echo "Failed to install yay. Exiting."; exit 1; }
 cd ..
 rm -rf yay
+}
 
 # Install Hyprland and other Hyprtools
 # Reference: https://wiki.hyprland.org/Getting-Started/Installation/
-sudo pacman --noconfirm -S hyprland hypridle hyprlock hyprpicker
+sudo pacman --noconfirm --needed -S hyprland hypridle hyprlock hyprpicker || { echo "Failed to install Hyprland packages. Exiting."; exit 1; }
 
 # Install Waybar
 # Reference: https://github.com/Alexays/Waybar/wiki/Installation
-yay --noconfirm -S waybar
+yay --noconfirm --needed -S waybar || { echo "Failed to install Waybar. Exiting."; exit 1; }
 
 # Install SwayBG
 # Reference: https://github.com/swaywm/swaybg
-yay --noconfirm -S swaybg
+yay --noconfirm --needed -S swaybg || { echo "Failed to install SwayBG. Exiting."; exit 1; }
 
 # Install and configure zsh
 # Reference: https://ohmyz.sh/#install
-ZSH= sh install.sh
-yay --noconfirm -S zsh 
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+yay --noconfirm --needed -S zsh 
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" || { echo "Failed to install OhMyZsh. Exiting."; exit 1; }
 
 # Install zsh plugins
 # Reference: https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md
@@ -64,29 +91,41 @@ git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM
 
 # Configure zsh
 cp ./.zshrc ~/.zshrc
-source ~/.zshrc
 
 # Install nvim
-sudo pacman --noconfirm -S neovim
+sudo pacman --noconfirm --needed -S neovim || { echo "Failed to install neovim. Exiting."; exit 1; }
 
 # Install alacritty
 # Reference: https://github.com/alacritty/alacritty/blob/master/INSTALL.md
-sudo pacman --noconfirm -S alacritty
+sudo pacman --noconfirm --needed -S alacritty || { echo "Failed to install alacritty. Exiting."; exit 1; }
 
 # Configure alacritty
 # Reference: https://alacritty.org/config-alacritty.html
-rm -rf $HOME/.config/alacritty
-ln -s $HOME/.config/hypr/alacritty $HOME/.config/alacritty
+if [ -d "$HOME/.config/hypr/alacritty" ]; then
+    rm -rf "$HOME/.config/alacritty"
+fi
+if [ ! -L "$HOME/.config/alacritty" ]; then
+    ln -s "$HOME/.config/hypr/alacritty" "$HOME/.config/alacritty"
+fi
 
 # Install other dependencies
-yay --noconfirm -S htop powertop fzf fd ffmpeg mpc mpd lxappearance networkmanager nvm ts-node perf pulseaudio thunar thunar-archive-plugin tmux viewnior wireguard-tools xarchiver zip unzip unrar 7zip sl openvpn catppuccin-gtk-theme-mocha
+yay --noconfirm --needed -S htop powertop fzf fd ffmpeg mpc mpd lxappearance networkmanager nvm ts-node perf pulseaudio thunar thunar-archive-plugin tmux viewnior wireguard-tools xarchiver zip unzip unrar 7zip sl openvpn catppuccin-gtk-theme-mocha || { echo "Failed to install dependency packages. Exiting."; exit 1; }
 
 # Install optional software
 echo "[?] Install optional software?"
-yay -S librewolf chromium tt-bin gparted btop gimp libreoffice obsidian syncthing syncthingtray-qt6 webcord signal-desktop drawio-desktop vlc
+read -p "Do you want to continue? (y/N): " install_optional
+if [[ "$install_optional" =~ ^[Yy]$ ]]; then
+    yay --needed -S librewolf chromium tt-bin gparted btop gimp libreoffice obsidian syncthing syncthingtray-qt6 webcord signal-desktop drawio-desktop vlc
+fi
 
 # Cleanup
 cd ..
-rm -rf hyprinstall
+if [ -d "hyprinstall" ]; then
+    rm -rf hyprinstall
+fi
 
+# Source .zshrc
+source ~/.zshrc
+
+# Complete Installation
 echo "[!] Installation successful!"
