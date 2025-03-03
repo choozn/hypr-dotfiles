@@ -61,8 +61,9 @@ sudo pacman --noconfirm -S --needed git base-devel || { echo "Failed to install 
 # Copy repository
 git clone $repository || { echo "Failed to clone dotfiles. Exiting."; exit 1; } 
 
+echo "Interessant:"
 # Copy hyprland folder
-cp -rf "./$folder" "$HOME/.config/hypr"
+cp -rf "./$folder/*" "$HOME/.config/hypr/"
 # rm $HOME/.config/hypr/install.sh
 
 # Install yay
