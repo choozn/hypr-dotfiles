@@ -121,4 +121,3 @@ alias gp='git push origin master'
 
 # Vim input
 set -o vi
-
