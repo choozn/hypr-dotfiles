@@ -62,7 +62,7 @@ sudo pacman --noconfirm -S --needed git base-devel || { echo "Failed to install 
 git clone $repository || { echo "Failed to clone dotfiles. Exiting."; exit 1; } 
 
 # Copy hyprland folder
-cp "./$folder" "$HOME/.config/hypr"
+cp -rf "./$folder" "$HOME/.config/hypr"
 # rm $HOME/.config/hypr/install.sh
 
 # Install yay
@@ -103,7 +103,7 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-m
 git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
 
 # Copy .zshrc config
-cp "./$folder/.zshrc" "$HOME/.zshrc"
+cp -f "./$folder/.zshrc" "$HOME/.zshrc"
 
 # Install nvim
 sudo pacman --noconfirm --needed -S neovim || { echo "Failed to install neovim. Exiting."; exit 1; }
