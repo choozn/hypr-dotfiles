@@ -3,13 +3,11 @@
 # Installation script for my dotfiles
 # It is recommended to install on a fresh Installation of Arch Linux
 
+set -x
+set -e
+
 folder="hypr-dotfiles"
 repository="https://github.com/choozn/$folder"
-
-if [[ $EUID -ne 0 ]]; then
-   echo "This script must be run as root (using sudo)."
-   exit 1
-fi
 
 echo "[!] Starting installation of hypr-dotfiles by @choozn!"
 
@@ -44,7 +42,7 @@ fi
 
 # Clear installation folder
 if [ -d "hyprinstall" ]; then
-    rm -rf "hyprinstall"
+    sudo rm -rf "hyprinstall"
 fi
 
 # Create installation folder
@@ -61,10 +59,11 @@ sudo pacman --noconfirm -S --needed git base-devel || { echo "Failed to install 
 # Copy repository
 git clone $repository || { echo "Failed to clone dotfiles. Exiting."; exit 1; } 
 
-echo "Interessant:"
 # Copy hyprland folder
-cp -rf "./$folder/*" "$HOME/.config/hypr/"
-# rm $HOME/.config/hypr/install.sh
+echo "Contents of $(pwd)/$folder:"
+ls -l "./$folder"
+cp -rf "$(pwd)/$folder/*" "$HOME/.config/hypr/"
+ls -l "./$folder"
 
 # Install yay
 # Reference: https://github.com/Jguer/yay
