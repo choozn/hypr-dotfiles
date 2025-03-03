@@ -3,9 +3,6 @@
 # Installation script for my dotfiles
 # It is recommended to install on a fresh Installation of Arch Linux
 
-set -x
-set -e
-
 folder="hypr-dotfiles"
 repository="https://github.com/choozn/$folder"
 
