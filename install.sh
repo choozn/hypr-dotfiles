@@ -48,11 +48,11 @@ cd hyprinstall
 sudo pacman --noconfirm -S --needed git base-devel || { echo "Failed to install git or base-devel. Exiting."; exit 1; }
 
 # Copy repository
-git clone $repository
+git clone $repository || { echo "Failed to clone dotfiles. Exiting."; exit 1; } 
 
 # Copy hyprland folder
 cp ./$folder $HOME/.config/hypr
-rm $HOME/.config/hypr/install.sh
+# rm $HOME/.config/hypr/install.sh
 
 # Install yay
 # Reference: https://github.com/Jguer/yay
