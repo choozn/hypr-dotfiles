@@ -9,6 +9,13 @@ set -e
 folder="hypr-dotfiles"
 repository="https://github.com/choozn/$folder"
 
+# Check if the script is run as root
+if [[ $EUID -eq 0 ]]; then
+   echo "This script should NOT be run as root (using sudo)."
+   echo "Please run this script as the user for whom you want to install the dotfiles."
+   exit 1
+fi
+
 echo "[!] Starting installation of hypr-dotfiles by @choozn!"
 
 # Request sudo privileges
@@ -61,9 +68,8 @@ git clone $repository || { echo "Failed to clone dotfiles. Exiting."; exit 1; }
 
 # Copy hyprland folder
 echo "Contents of $(pwd)/$folder:"
-ls -l "./$folder"
-cp -rf "$(pwd)/$folder/*" "$HOME/.config/hypr/"
-ls -l "./$folder"
+# cp -rf "$(pwd)/$folder/*" "$HOME/.config/hypr/"
+find "$(pwd)/$folder" -maxdepth 1 -mindepth 1 -print0 | xargs -0 cp -rf -t "$HOME/.config/hypr/" || { echo "Failed to copy Hyprland configuration. Exiting."; exit 1; }
 
 # Install yay
 # Reference: https://github.com/Jguer/yay
