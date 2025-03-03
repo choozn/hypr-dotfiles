@@ -79,7 +79,10 @@ yay --noconfirm --needed -S swaybg || { echo "Failed to install SwayBG. Exiting.
 # Install and configure zsh
 # Reference: https://ohmyz.sh/#install
 yay --noconfirm --needed -S zsh 
+
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" || { echo "Failed to install OhMyZsh. Exiting."; exit 1; }
+fi
 
 # Install zsh plugins
 # Reference: https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md
