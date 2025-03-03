@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-DIR="$HOME/.config/hypr"
-export SUDO_ASKPASS="$DIR"/scripts/rofi_askpass
-sudo -E -A $1

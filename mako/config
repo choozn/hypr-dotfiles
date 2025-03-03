@@ -9,7 +9,6 @@ on-button-left=dismiss
 on-button-middle=none
 on-button-right=dismiss-all
 on-touch=dismiss
-# on-notify=exec mpv /usr/share/sounds/freedesktop/stereo/message.oga
 
 # STYLE OPTIONS
 font=JetBrains Mono 10
@@ -32,7 +31,7 @@ max-visible=5
 layer=overlay
 anchor=top-right
 
-# Mako_Colors
+# COLORS
 background-color=#1E1E2E
 text-color=#CDD6F4
 border-color=#28283d

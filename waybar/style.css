@@ -15,7 +15,8 @@
 	color: white;
 }
 
-/*
+
+/* Dock to top
 window {
 	background-color: rgba(11, 19, 43, 0.35);
 	transition-property: background-color;
@@ -32,7 +33,7 @@ window {
 	transition-property: background-color;
 	transition-duration: .4s;
 	border-radius: 12px;
-	border: 1px solid rgba(68, 255, 211, 0.65);
+	border: 1px solid rgba(68, 255, 211, 0.5);
 	padding: 20px 10px;
 }
 
@@ -45,7 +46,7 @@ window#waybar>* {
 }
 
 #tray {
-	background-color: #cdd6f4;
+	background-color: #fff;
 }
 
 #tray>.passive {
