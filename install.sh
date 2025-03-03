@@ -100,7 +100,7 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-m
 git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
 
 # Configure zsh
-cp ./.zshrc ~/.zshrc
+cp ./$folder/.zshrc $HOME/.zshrc
 
 # Install nvim
 sudo pacman --noconfirm --needed -S neovim || { echo "Failed to install neovim. Exiting."; exit 1; }
