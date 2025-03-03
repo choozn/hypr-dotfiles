@@ -38,10 +38,17 @@ if [ -d "$HOME/.config/alacritty" ]; then
   cp -r "$HOME/.config/alacritty/" "$backuppath/alacritty/"
 fi
 
+# Clear installation folder
+if [ -d "hyprinstall" ]; then
+    rm -rf hyprinstall
+fi
+
 # Create installation folder
 if [ ! -d "$DIRECTORY" ]; then
 mkdir hyprinstall
 fi
+
+# Move into installation directory
 cd hyprinstall
 
 # Install dependencies to install
@@ -126,9 +133,6 @@ cd ..
 if [ -d "hyprinstall" ]; then
     rm -rf hyprinstall
 fi
-
-# Source .zshrc
-source ~/.zshrc
 
 # Complete Installation
 echo "[!] Installation successful!"
