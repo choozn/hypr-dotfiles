@@ -16,7 +16,7 @@ fi
 echo "[!] Starting installation of hypr-dotfiles by @choozn!"
 
 # Request sudo privileges
-sudo -v || { echo "Failed to gain sudo access."; exit 1; }
+sudo -v || { echo "[!] Failed to gain sudo access."; exit 1; }
 
 # Check permissions
 if [ ! -w "$HOME/.config" ]; then
@@ -27,75 +27,76 @@ fi
 # Backup previous configs
 backup_folder="hypr_backup_$(date +'%Y-%m-%d_%H-%M-%S')"
 backup_path="$HOME/.config/$backup_folder"
-if [ ! -d backup_path ]; then
+if [ ! -d $backup_path ]; then
     mkdir -p $backup_path
 fi
 
 # Backup .zshrc
 if [ -f "$HOME/.zshrc" ]; then
-    cp "$HOME/.zshrc" "$backup_path/.zshrc"
+    cp "$HOME/.zshrc" "$backup_path/.zshrc" || { echo "[!] Failed to backup .zshrc config. Exiting."; exit 1; }
 fi
 
 # Backup .config/hypr
 if [ -d "$HOME/.config/hypr" ]; then
-    cp -r "$HOME/.config/hypr/" "$backup_path/hypr/"
+    cp -r "$HOME/.config/hypr/" "$backup_path/hypr/" || { echo "[!] Failed to backup hyprland config files. Exiting."; exit 1; }
 fi
 
 # Backup .config/alacritty
 if [ -d "$HOME/.config/alacritty" ]; then
-    cp -r "$HOME/.config/alacritty/" "$backup_path/alacritty/"
+    cp -r "$HOME/.config/alacritty/" "$backup_path/alacritty/" || { echo "[!] Failed to backup alacritty config files. Exiting."; exit 1; }
 fi
+
+echo "[!] The backup of previous config files has finished."
 
 # Clear installation folder
 if [ -d "hyprinstall" ]; then
-    sudo rm -rf "hyprinstall"
+    rm -rf "hyprinstall" || { echo "[!] Failed to delete already existing installation directory. Exiting."; exit 1; }
 fi
 
 # Create installation folder
 if [ ! -d "hyprinstall" ]; then
-    mkdir "hyprinstall"
+    mkdir "hyprinstall" || { echo "[!] Failed to create installation directory. Exiting."; exit 1; }
 fi
 
 # Move into installation directory
 cd "hyprinstall"
 
 # Install dependencies to install
-sudo pacman --noconfirm -S --needed git base-devel || { echo "Failed to install git or base-devel. Exiting."; exit 1; }
+sudo pacman --noconfirm -S --needed git base-devel || { echo "[!] Failed to install git or base-devel. Exiting."; exit 1; }
 
 # Copy repository
-git clone $repository || { echo "Failed to clone dotfiles. Exiting."; exit 1; } 
+git clone $repository || { echo "[!] Failed to clone dotfiles. Exiting."; exit 1; } 
 
 # Copy hyprland folder
-echo "Contents of $(pwd)/$folder:"
-find "./$folder" -maxdepth 1 -mindepth 1 -print0 | xargs -0 cp -rf -t "$HOME/.config/hypr/" || { echo "Failed to copy Hyprland configuration. Exiting."; exit 1; }
+find "./$folder" -maxdepth 1 -mindepth 1 -print0 | xargs -0 cp -rf -t "$HOME/.config/hypr/" || { echo "[!] Failed to copy Hyprland configuration. Exiting."; exit 1; }
 
 # Install yay
 # Reference: https://github.com/Jguer/yay
 command -v yay >/dev/null 2>&1 || {
-    git clone https://aur.archlinux.org/yay.git || { echo "Failed to clone yay repository. Exiting."; exit 1; }
+    git clone https://aur.archlinux.org/yay.git || { echo "[!] Failed to clone yay repository. Exiting."; exit 1; }
     cd yay
-    makepkg -si || { echo "Failed to install yay. Exiting."; exit 1; }
+    makepkg -si || { echo "[!] Failed to install yay. Exiting."; exit 1; }
     cd ..
-    rm -rf yay
+    rm -rf yay || { echo "[!] Failed to install yay. Exiting."; exit 1; }
 }
 
 # Install Hyprland and other Hyprtools
 # Reference: https://wiki.hyprland.org/Getting-Started/Installation/
-sudo pacman --noconfirm --needed -S hyprland hypridle hyprlock hyprpicker || { echo "Failed to install Hyprland packages. Exiting."; exit 1; }
+sudo pacman --noconfirm --needed -S hyprland hypridle hyprlock hyprpicker || { echo "[!] Failed to install Hyprland packages. Exiting."; exit 1; }
 
 # Install Waybar
 # Reference: https://github.com/Alexays/Waybar/wiki/Installation
-yay --noconfirm --needed -S waybar || { echo "Failed to install Waybar. Exiting."; exit 1; }
+yay --noconfirm --needed -S waybar || { echo "[!] Failed to install Waybar. Exiting."; exit 1; }
 
 # Install SwayBG
 # Reference: https://github.com/swaywm/swaybg
-yay --noconfirm --needed -S swaybg || { echo "Failed to install SwayBG. Exiting."; exit 1; }
+yay --noconfirm --needed -S swaybg || { echo "[!] Failed to install SwayBG. Exiting."; exit 1; }
 
 # Install and configure OhMyZsh
 # Reference: https://ohmyz.sh/#install
-yay --noconfirm --needed -S zsh 
+yay --noconfirm --needed -S zsh || { echo "[!] Failed to install zsh. Exiting."; exit 1; }
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" || { echo "Failed to install OhMyZsh. Exiting."; exit 1; }
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" || { echo "[!] Failed to install OhMyZsh. Exiting."; exit 1; }
 fi
 
 # Install zsh plugins
@@ -107,42 +108,41 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-m
 git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
 
 # Copy .zshrc config
-cp -f "./$folder/.zshrc" "$HOME/.zshrc"
+cp -f "./$folder/.zshrc" "$HOME/.zshrc" || { echo "[!] Failed to copy zsh config. Exiting."; exit 1; }
 
 # Install nvim
-sudo pacman --noconfirm --needed -S neovim || { echo "Failed to install neovim. Exiting."; exit 1; }
+sudo pacman --noconfirm --needed -S neovim || { echo "[!] Failed to install neovim. Exiting."; exit 1; }
 
 # Install alacritty
 # Reference: https://github.com/alacritty/alacritty/blob/master/INSTALL.md
-sudo pacman --noconfirm --needed -S alacritty || { echo "Failed to install alacritty. Exiting."; exit 1; }
+sudo pacman --noconfirm --needed -S alacritty || { echo "[!] Failed to install alacritty. Exiting."; exit 1; }
 
 # Configure alacritty
 # Reference: https://alacritty.org/config-alacritty.html
 
 # Remove alacritty config
 if [ -d "$HOME/.config/hypr/alacritty" ]; then
-    rm -rf "$HOME/.config/alacritty"
+    rm -rf "$HOME/.config/alacritty" || { echo "[!] Failed to clear alacritty folder. Exiting."; exit 1; }
 fi
 
 # Insert link to new alacritty config
 if [ ! -L "$HOME/.config/alacritty" ]; then
-    ln -s "$HOME/.config/hypr/alacritty" "$HOME/.config/alacritty"
+    ln -s "$HOME/.config/hypr/alacritty" "$HOME/.config/alacritty" || { echo "[!] Failed to link alacritty config. Exiting."; exit 1; }
 fi
 
 # Install other dependencies
-yay --noconfirm --needed -S htop powertop fzf fd ffmpeg mpc mpd lxappearance networkmanager nvm ts-node perf pulseaudio thunar thunar-archive-plugin tmux viewnior wireguard-tools xarchiver zip unzip unrar 7zip sl openvpn catppuccin-gtk-theme-mocha || { echo "Failed to install dependency packages. Exiting."; exit 1; }
+yay --noconfirm --needed -S htop powertop fzf fd ffmpeg mpc mpd lxappearance networkmanager nvm ts-node perf pulseaudio thunar thunar-archive-plugin tmux viewnior wireguard-tools xarchiver zip unzip unrar 7zip sl openvpn catppuccin-gtk-theme-mocha || { echo "[!] Failed to install dependency packages. Exiting."; exit 1; }
 
 # Install optional software
-echo "[?] Install optional software?"
-read -p "Do you want to continue? (y/N): " install_optional
+read -p "[?] Should optional software be installed? (y/N): " install_optional
 if [[ "$install_optional" =~ ^[Yy]$ ]]; then
-    yay --needed -S librewolf chromium tt-bin gparted btop gimp libreoffice obsidian syncthing syncthingtray-qt6 webcord signal-desktop drawio-desktop vlc
+    yay --needed -S librewolf chromium tt-bin gparted btop gimp libreoffice obsidian syncthing syncthingtray-qt6 webcord signal-desktop drawio-desktop vlc || { echo "[!] Failed to install optional software. Exiting."; exit 1; }
 fi
 
 # Cleanup installation directory
 cd ..
 if [ -d "hyprinstall" ]; then
-    rm -rf "hyprinstall"
+    rm -rf "hyprinstall" || { echo "[!] Failed to delete installation directory. Exiting."; exit 1; }
 fi
 
 # Complete Installation
