@@ -18,10 +18,20 @@ echo "[!] Starting installation of hypr-dotfiles by @choozn!"
 # Request sudo privileges
 sudo -v || { echo "[!] Failed to gain sudo access."; exit 1; }
 
+# Create .config directory
+if [ ! -d "$HOME/.config" ]; then
+    mkdir "$HOME/.config" || { echo "[!] Failed to create .config directory. Exiting."; exit 1; }
+fi
+
 # Check permissions
 if [ ! -w "$HOME/.config" ]; then
     echo "[!] You do not have write permissions for $HOME/.config. Please fix permissions and retry."
     exit 1
+fi
+
+# Create .config/hypr directory
+if [ ! -d "$HOME/.config/hypr" ]; then
+    mkdir "$HOME/.config/hypr" || { echo "[!] Failed to create .config/hypr directory. Exiting."; exit 1; }
 fi
 
 # Backup previous configs
@@ -96,7 +106,7 @@ yay --noconfirm --needed -S swaybg || { echo "[!] Failed to install SwayBG. Exit
 # Reference: https://ohmyz.sh/#install
 yay --noconfirm --needed -S zsh || { echo "[!] Failed to install zsh. Exiting."; exit 1; }
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" || { echo "[!] Failed to install OhMyZsh. Exiting."; exit 1; }
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended || { echo "[!] Failed to install OhMyZsh. Exiting."; exit 1; }
 fi
 
 # Install zsh plugins
@@ -131,7 +141,8 @@ if [ ! -L "$HOME/.config/alacritty" ]; then
 fi
 
 # Install other dependencies
-yay --noconfirm --needed -S htop powertop fzf fd ffmpeg mpc mpd lxappearance networkmanager nvm ts-node perf pulseaudio thunar thunar-archive-plugin tmux viewnior wireguard-tools xarchiver zip unzip unrar 7zip sl openvpn catppuccin-gtk-theme-mocha || { echo "[!] Failed to install dependency packages. Exiting."; exit 1; }
+sudo pacman --noconfirm --needed -S htop powertop fzf fd ffmpeg mpc mpd lxappearance networkmanager nvm ts-node perf pulseaudio thunar thunar-archive-plugin tmux viewnior wireguard-tools xarchiver zip unzip unrar 7zip openvpn || { echo "[!] Failed to install dependency packages (1). Exiting."; exit 1; }
+yay --noconfirm --needed -S catppuccin-gtk-theme-mocha || { echo "[!] Failed to install dependency packages (2). Exiting."; exit 1; }
 
 # Install optional software
 read -p "[?] Should optional software be installed? (y/N): " install_optional
