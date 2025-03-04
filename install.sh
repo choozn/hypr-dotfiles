@@ -50,7 +50,7 @@ if [ -d "hyprinstall" ]; then
 fi
 
 # Create installation folder
-if [ ! -d "$DIRECTORY" ]; then
+if [ ! -d "hyprinstall" ]; then
 mkdir "hyprinstall"
 fi
 
@@ -66,7 +66,7 @@ git clone $repository || { echo "Failed to clone dotfiles. Exiting."; exit 1; }
 # Copy hyprland folder
 echo "Contents of $(pwd)/$folder:"
 # cp -rf "$(pwd)/$folder/*" "$HOME/.config/hypr/"
-find "$(pwd)/$folder" -maxdepth 1 -mindepth 1 -print0 | xargs -0 cp -rf -t "$HOME/.config/hypr/" || { echo "Failed to copy Hyprland configuration. Exiting."; exit 1; }
+find "./$folder" -maxdepth 1 -mindepth 1 -print0 | xargs -0 cp -rf -t "$HOME/.config/hypr/" || { echo "Failed to copy Hyprland configuration. Exiting."; exit 1; }
 
 # Install yay
 # Reference: https://github.com/Jguer/yay
