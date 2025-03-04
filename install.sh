@@ -1,15 +1,15 @@
 #!/bin/bash
 # Copyright (C) 2025 choozn
 # Installation script for my dotfiles
-# It is recommended to install on a fresh Installation of Arch Linux
+# It is recommended to install on a fresh installation of Arch Linux
 
 folder="hypr-dotfiles"
 repository="https://github.com/choozn/$folder"
 
 # Check if the script is run as root
 if [[ $EUID -eq 0 ]]; then
-   echo "This script should NOT be run as root (using sudo)."
-   echo "Please run this script as the user for whom you want to install the dotfiles."
+   echo "[!] This script should NOT be run as root (or using sudo)."
+   echo "[!] Please run this script only as the user for whom you want to install the dotfiles."
    exit 1
 fi
 
@@ -27,21 +27,23 @@ fi
 # Backup previous configs
 backupfolder="hypr_backup_$(date +'%Y-%m-%d_%H-%M-%S')"
 backuppath="$HOME/.config/$backupfolder"
-mkdir -p $backuppath
+if [ ! -d backuppath ]; then
+    mkdir -p $backuppath
+fi
 
 # Backup .zshrc
 if [ -f "$HOME/.zshrc" ]; then
-  cp "$HOME/.zshrc" "$backuppath/.zshrc"
+    cp "$HOME/.zshrc" "$backuppath/.zshrc"
 fi
 
 # Backup .config/hypr
 if [ -d "$HOME/.config/hypr" ]; then
-  cp -r "$HOME/.config/hypr/" "$backuppath/hypr/"
+    cp -r "$HOME/.config/hypr/" "$backuppath/hypr/"
 fi
 
 # Backup .config/alacritty
 if [ -d "$HOME/.config/alacritty" ]; then
-  cp -r "$HOME/.config/alacritty/" "$backuppath/alacritty/"
+    cp -r "$HOME/.config/alacritty/" "$backuppath/alacritty/"
 fi
 
 # Clear installation folder
@@ -51,7 +53,7 @@ fi
 
 # Create installation folder
 if [ ! -d "hyprinstall" ]; then
-mkdir "hyprinstall"
+    mkdir "hyprinstall"
 fi
 
 # Move into installation directory
@@ -65,7 +67,6 @@ git clone $repository || { echo "Failed to clone dotfiles. Exiting."; exit 1; }
 
 # Copy hyprland folder
 echo "Contents of $(pwd)/$folder:"
-# cp -rf "$(pwd)/$folder/*" "$HOME/.config/hypr/"
 find "./$folder" -maxdepth 1 -mindepth 1 -print0 | xargs -0 cp -rf -t "$HOME/.config/hypr/" || { echo "Failed to copy Hyprland configuration. Exiting."; exit 1; }
 
 # Install yay
@@ -117,9 +118,13 @@ sudo pacman --noconfirm --needed -S alacritty || { echo "Failed to install alacr
 
 # Configure alacritty
 # Reference: https://alacritty.org/config-alacritty.html
+
+# Remove alacritty config
 if [ -d "$HOME/.config/hypr/alacritty" ]; then
     rm -rf "$HOME/.config/alacritty"
 fi
+
+# Insert link to new alacritty config
 if [ ! -L "$HOME/.config/alacritty" ]; then
     ln -s "$HOME/.config/hypr/alacritty" "$HOME/.config/alacritty"
 fi
@@ -134,7 +139,7 @@ if [[ "$install_optional" =~ ^[Yy]$ ]]; then
     yay --needed -S librewolf chromium tt-bin gparted btop gimp libreoffice obsidian syncthing syncthingtray-qt6 webcord signal-desktop drawio-desktop vlc
 fi
 
-# Cleanup
+# Cleanup installation directory
 cd ..
 if [ -d "hyprinstall" ]; then
     rm -rf "hyprinstall"
