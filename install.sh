@@ -25,25 +25,25 @@ if [ ! -w "$HOME/.config" ]; then
 fi
 
 # Backup previous configs
-backupfolder="hypr_backup_$(date +'%Y-%m-%d_%H-%M-%S')"
-backuppath="$HOME/.config/$backupfolder"
-if [ ! -d backuppath ]; then
-    mkdir -p $backuppath
+backup_folder="hypr_backup_$(date +'%Y-%m-%d_%H-%M-%S')"
+backup_path="$HOME/.config/$backup_folder"
+if [ ! -d backup_path ]; then
+    mkdir -p $backup_path
 fi
 
 # Backup .zshrc
 if [ -f "$HOME/.zshrc" ]; then
-    cp "$HOME/.zshrc" "$backuppath/.zshrc"
+    cp "$HOME/.zshrc" "$backup_path/.zshrc"
 fi
 
 # Backup .config/hypr
 if [ -d "$HOME/.config/hypr" ]; then
-    cp -r "$HOME/.config/hypr/" "$backuppath/hypr/"
+    cp -r "$HOME/.config/hypr/" "$backup_path/hypr/"
 fi
 
 # Backup .config/alacritty
 if [ -d "$HOME/.config/alacritty" ]; then
-    cp -r "$HOME/.config/alacritty/" "$backuppath/alacritty/"
+    cp -r "$HOME/.config/alacritty/" "$backup_path/alacritty/"
 fi
 
 # Clear installation folder
