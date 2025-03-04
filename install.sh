@@ -98,6 +98,9 @@ sudo pacman --noconfirm --needed -S hyprland hypridle hyprlock hyprpicker || { e
 # Reference: https://github.com/Alexays/Waybar/wiki/Installation
 yay --noconfirm --needed -S waybar || { echo "[!] Failed to install Waybar. Exiting."; exit 1; }
 
+# Install Fonts
+sudo pacman --noconfirm --needed -S ttf-jetbrains-mono ttf-jetbrains-mono-nerd ttf-iosevka-nerd || { echo "[!] Failed to install Fonts. Exiting."; exit 1; }
+
 # Install SwayBG
 # Reference: https://github.com/swaywm/swaybg
 yay --noconfirm --needed -S swaybg || { echo "[!] Failed to install SwayBG. Exiting."; exit 1; }
