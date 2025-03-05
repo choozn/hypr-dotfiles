@@ -71,6 +71,8 @@ fi
 # Move into installation directory
 cd "hyprinstall"
 
+# Update pacman 
+
 # Install dependencies to install
 sudo pacman --noconfirm -S --needed git base-devel || { echo "[!] Failed to install git or base-devel. Exiting."; exit 1; }
 
@@ -144,8 +146,8 @@ if [ ! -L "$HOME/.config/alacritty" ]; then
 fi
 
 # Install other dependencies
-sudo pacman --noconfirm --needed -S xclip wl-clipboard htop powertop fzf fd ffmpeg mpc mpd lxappearance networkmanager nvm ts-node perf pulseaudio thunar thunar-archive-plugin tmux viewnior wireguard-tools xarchiver zip unzip unrar 7zip openvpn || { echo "[!] Failed to install dependency packages (1). Exiting."; exit 1; }
-yay --noconfirm --needed -S catppuccin-gtk-theme-mocha || { echo "[!] Failed to install dependency packages (2). Exiting."; exit 1; }
+sudo pacman --noconfirm --needed -S xclip wl-clipboard htop powertop fzf fd ffmpeg mpc mpd lxappearance networkmanager ts-node perf pulseaudio thunar thunar-archive-plugin tmux viewnior wireguard-tools xarchiver zip unzip unrar 7zip openvpn || { echo "[!] Failed to install dependency packages (1). Exiting."; exit 1; }
+yay --noconfirm --needed -S nvm catppuccin-gtk-theme-mocha || { echo "[!] Failed to install dependency packages (2). Exiting."; exit 1; }
 
 # Install optional software
 read -p "[?] Should optional software be installed? (y/N): " install_optional
