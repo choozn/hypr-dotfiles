@@ -5,7 +5,7 @@
 		"align": 0,
 		"rotate": 0,
         "format": "{icon} {percent}%",
-        "format-icons": ["", "", "", ""],
+        "format-icons": ["󰃞", "󰃝", "󰃟", "󰃠"],
         "on-click": "",
         "on-click-middle": "",
         "on-click-right": "",
@@ -40,12 +40,12 @@
 
 	// waybar-bluetooth
     "bluetooth": {
-        "format": " {status}",
-        "format-on": " {status}",
-        "format-off": " {status}",
-        "format-disabled": " {status}",
-        "format-connected": " {device_alias}",
-        "format-connected-battery": " {device_alias}, {device_battery_percentage}%",
+        "format": "󰂯 {status}",
+        "format-on": "󰂯 {status}",
+        "format-off": "󰂲 {status}",
+        "format-disabled": "󰂲 {status}",
+        "format-connected": "󰂱 {device_alias}",
+        "format-connected-battery": "󰂱 {device_alias}, {device_battery_percentage}%",
         "tooltip": true,
         "tooltip-format": "{controller_alias}\t{controller_address}",
         "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
@@ -73,23 +73,23 @@
 	// waybar-disk
     "disk": {
          "interval": 30,
-         "format": " FREE: {free}"
+         "format": "󰆼 FREE: {free}"
     },           	
 	
 	// waybar-memory
     "memory": {
          "interval": 10,
-         "format": " USED: {used:0.1f}G"
+         "format": " USED: {used:0.1f}G"
     },
 
 	// waybar-network
     "network": {
 		"interval": 5,
         "format-wifi": "  {essid}",
-        "format-ethernet": " {ipaddr}/{cidr}",
-        "format-linked": " {ifname} (No IP)",
-        "format-disconnected": "睊 Disconnected",
-        "format-disabled": "睊 Disabled",
+        "format-ethernet": "󰈀 {ipaddr}/{cidr}",
+        "format-linked": "󰈀 {ifname} (No IP)",
+        "format-disconnected": "󰖪 Disconnected",
+        "format-disabled": "󰖪 Disabled",
         "format-alt": " {bandwidthUpBits} |  {bandwidthDownBits}",
         "tooltip-format": "  {ifname} via {gwaddr}",
     },
