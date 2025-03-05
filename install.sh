@@ -3,7 +3,7 @@
 # Installation script for my dotfiles
 # It is recommended to install on a fresh installation of Arch Linux
 #
-# To install in one line, run the following command.
+# To install in one line, run the following command:
 # curl -Ls hypr.choozn.dev | bash
 
 folder="hypr-dotfiles"
@@ -32,7 +32,7 @@ if [ ! -w "$HOME/.config" ]; then
     exit 1
 fi
 
-# Create .config/hypr directory
+# Create .config/hypr directory if its missing
 if [ ! -d "$HOME/.config/hypr" ]; then
     mkdir "$HOME/.config/hypr" || { echo "[!] Failed to create .config/hypr directory. Exiting."; exit 1; }
 fi
@@ -128,8 +128,10 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
 
-# Copy .zshrc config
-cp -f "./$folder/.zshrc" "$HOME/.zshrc" || { echo "[!] Failed to copy zsh config. Exiting."; exit 1; }
+# Configure zsh
+# cp -f "./$folder/zsh/.zshrc" "$HOME/.zshrc" || { echo "[!] Failed to copy zsh config. Exiting."; exit 1; }
+ln -s "$HOME/.config/hypr/zsh/.zshrc" "$HOME/.zshrc" || { echo "[!] Failed to link zsh config. Exiting."; exit 1; }
+ln -s "$HOME/.config/hypr/zsh/choozn.zsh-theme" "$HOME/.oh-my-zsh/custom/themes/choozn.zsh-theme" || { echo "[!] Failed to link zsh config. Exiting."; exit 1; }
 
 # Cleanup installation directory
 cd ..
