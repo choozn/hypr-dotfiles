@@ -171,7 +171,7 @@ if [ ! -L "$HOME/.config/alacritty" ]; then
 fi
 
 # Install other dependencies
-sudo pacman --noconfirm --needed -S xclip wl-clipboard htop powertop fzf fd ffmpeg mpc mpd lxappearance networkmanager ts-node perf pulseaudio thunar thunar-archive-plugin tmux viewnior wireguard-tools xarchiver zip unzip unrar 7zip openvpn || { echo "[!] Failed to install dependency packages (1). Exiting."; exit 1; }
+sudo pacman --noconfirm --needed -S man-db xclip wl-clipboard htop powertop fzf fd ffmpeg mpc mpd lxappearance networkmanager ts-node perf pulseaudio thunar thunar-archive-plugin tmux viewnior wireguard-tools xarchiver zip unzip unrar 7zip openvpn || { echo "[!] Failed to install dependency packages (1). Exiting."; exit 1; }
 yay --noconfirm --needed -S nvm catppuccin-gtk-theme-mocha topgrade-bin || { echo "[!] Failed to install dependency packages (2). Exiting."; exit 1; }
 
 # Install optional software
