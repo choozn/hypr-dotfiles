@@ -2,13 +2,7 @@ general.import = ["~/.config/hypr/alacritty/colors.toml", "~/.config/hypr/alacri
 
 general.ipc_socket = true
 
-## You can set shell.program to the path of your favorite shell, e.g. /bin/zsh.
-## Entries in shell.args are passed as arguments to the shell.
-#shell = { program = "/bin/zsh", args = ["--login"] }
-
-## Directory the shell is started in. When this is unset, or "None",
-## the working directory of the parent process will be used.
-#working_directory = "None"
+terminal.shell = { program = "/bin/zsh", args = ["--login"] }
 
 ## Live config reload
 general.live_config_reload = true
