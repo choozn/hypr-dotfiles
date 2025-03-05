@@ -137,7 +137,7 @@ fi
 
 # Remove old zsh theme
 if [ -f "$HOME/.config/hypr/zsh/choozn.zsh-theme" ]; then
-    rm "$HOME/.zshrc" || { echo "[!] Failed to remove old zsh theme. Exiting."; exit 1; }
+    rm "$HOME/.config/hypr/zsh/choozn.zsh-theme" || { echo "[!] Failed to remove old zsh theme. Exiting."; exit 1; }
 fi
 
 # Link new .zshrc and theme
