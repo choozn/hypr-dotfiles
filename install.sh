@@ -130,15 +130,17 @@ git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM
 
 # Configure zsh
 
-# 
+# Remove old .zshrc config
 if [ -f "$HOME/.zshrc" ]; then
-    rm $HOME/.zshrc || { echo "[!] Failed to remove old .zshrc config. Exiting."; exit 1; }
+    rm "$HOME/.zshrc" || { echo "[!] Failed to remove old .zshrc config. Exiting."; exit 1; }
 fi
 
+# Remove old zsh theme
 if [ -f "$HOME/.config/hypr/zsh/choozn.zsh-theme" ]; then
-    rm $HOME/.zshrc || { echo "[!] Failed to remove old zsh theme. Exiting."; exit 1; }
+    rm "$HOME/.zshrc" || { echo "[!] Failed to remove old zsh theme. Exiting."; exit 1; }
 fi
 
+# Link new .zshrc and theme
 ln -s "$HOME/.config/hypr/zsh/.zshrc" "$HOME/.zshrc" || { echo "[!] Failed to link zsh config. Exiting."; exit 1; }
 ln -s "$HOME/.config/hypr/zsh/choozn.zsh-theme" "$HOME/.oh-my-zsh/custom/themes/choozn.zsh-theme" || { echo "[!] Failed to link zsh config. Exiting."; exit 1; }
 
