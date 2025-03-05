@@ -129,7 +129,16 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-m
 git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
 
 # Configure zsh
-# cp -f "./$folder/zsh/.zshrc" "$HOME/.zshrc" || { echo "[!] Failed to copy zsh config. Exiting."; exit 1; }
+
+# 
+if [ -f "$HOME/.zshrc" ]; then
+    rm $HOME/.zshrc || { echo "[!] Failed to remove old .zshrc config. Exiting."; exit 1; }
+fi
+
+if [ -f "$HOME/.config/hypr/zsh/choozn.zsh-theme" ]; then
+    rm $HOME/.zshrc || { echo "[!] Failed to remove old zsh theme. Exiting."; exit 1; }
+fi
+
 ln -s "$HOME/.config/hypr/zsh/.zshrc" "$HOME/.zshrc" || { echo "[!] Failed to link zsh config. Exiting."; exit 1; }
 ln -s "$HOME/.config/hypr/zsh/choozn.zsh-theme" "$HOME/.oh-my-zsh/custom/themes/choozn.zsh-theme" || { echo "[!] Failed to link zsh config. Exiting."; exit 1; }
 
