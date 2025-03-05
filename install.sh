@@ -162,8 +162,8 @@ sudo pacman --noconfirm --needed -S xclip wl-clipboard htop powertop fzf fd ffmp
 yay --noconfirm --needed -S nvm catppuccin-gtk-theme-mocha topgrade-bin || { echo "[!] Failed to install dependency packages (2). Exiting."; exit 1; }
 
 # Install optional software
-sudo pacman --needed -S gparted gimp libreoffice-still obsidian syncthing signal-desktop drawio-desktop vlc || { echo "[!] Failed to install optional software. Exiting."; exit 1; }
-yay --needed -S librewolf-bin ungoogled-chromium-bin syncthingtray-qt6 webcord-bin
+sudo pacman --needed -S gparted gimp libreoffice-still obsidian syncthing signal-desktop drawio-desktop vlc || { echo "[!] Failed to install optional software (1). Exiting."; exit 1; }
+yay --needed -S librewolf-bin ungoogled-chromium-bin syncthingtray-qt6 webcord-bin || { echo "[!] Failed to install optional software (2). Exiting."; exit 1; }
 
 # Complete Installation
 echo "[!] Installation successful!"
