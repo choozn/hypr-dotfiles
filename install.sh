@@ -182,4 +182,7 @@ yay --noconfirm --needed -S librewolf-bin ungoogled-chromium-bin syncthingtray-q
 echo "[!] Installation successful!"
 
 # Start Hyprland
-Hyprland || echo "[!] Please reboot your system to see the config in action. Run Hyprland to start the compositor."
+if [[ "$XDG_CURRENT_DESKTOP" != "Hyprland" ]]; then
+else
+    Hyprland || echo "[!] Please reboot your system to see the config in action. Run Hyprland to start the compositor."
+fi
