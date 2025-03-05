@@ -89,11 +89,11 @@ find "./$folder" -maxdepth 1 -mindepth 1 -print0 | xargs -0 cp -rf -t "$HOME/.co
 # Install yay
 # Reference: https://github.com/Jguer/yay
 command -v yay >/dev/null 2>&1 || {
-    git clone https://aur.archlinux.org/yay.git || { echo "[!] Failed to clone yay repository. Exiting."; exit 1; }
-    cd yay
+    git clone https://aur.archlinux.org/yay-bin.git || { echo "[!] Failed to clone yay repository. Exiting."; exit 1; }
+    cd yay-bin
     makepkg -si || { echo "[!] Failed to install yay (1). Exiting."; exit 1; }
     cd ..
-    rm -rf yay || { echo "[!] Failed to install yay (2). Exiting."; exit 1; }
+    rm -rf yay-bin || { echo "[!] Failed to install yay (2). Exiting."; exit 1; }
 }
 
 yay -Syu
