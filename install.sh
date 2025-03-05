@@ -169,4 +169,5 @@ fi
 
 # Complete Installation
 echo "[!] Installation successful!"
-echo "[!] Please reboot your system to see the config in action. Run Hyprland to start the compositor."
+
+Hyprland || echo "[!] Please reboot your system to see the config in action. Run Hyprland to start the compositor."
