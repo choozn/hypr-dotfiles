@@ -75,7 +75,7 @@ fi
 cd "hyprinstall"
 
 # Update pacman database and do a system update
-sudo pacman -Syyu
+sudo pacman --noconfirm -Syyu
 
 # Install dependencies to install
 sudo pacman --noconfirm -S --needed git base-devel || { echo "[!] Failed to install git or base-devel. Exiting."; exit 1; }
@@ -96,7 +96,7 @@ command -v yay >/dev/null 2>&1 || {
     rm -rf yay-bin || { echo "[!] Failed to install yay (2). Exiting."; exit 1; }
 }
 
-yay -Syu
+yay --noconfirm -Syu
 
 # Install Hyprland and other Hyprtools
 # Reference: https://wiki.hyprland.org/Getting-Started/Installation/
