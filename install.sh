@@ -2,6 +2,9 @@
 # Copyright (C) 2025 choozn
 # Installation script for my dotfiles
 # It is recommended to install on a fresh installation of Arch Linux
+#
+# To install in one line, run the following command.
+# curl -Ls hypr.choozn.dev | bash
 
 folder="hypr-dotfiles"
 repository="https://github.com/choozn/$folder"
@@ -71,7 +74,8 @@ fi
 # Move into installation directory
 cd "hyprinstall"
 
-# Update pacman 
+# Update pacman database and do a system update
+sudo pacman -Syyu
 
 # Install dependencies to install
 sudo pacman --noconfirm -S --needed git base-devel || { echo "[!] Failed to install git or base-devel. Exiting."; exit 1; }
@@ -87,10 +91,12 @@ find "./$folder" -maxdepth 1 -mindepth 1 -print0 | xargs -0 cp -rf -t "$HOME/.co
 command -v yay >/dev/null 2>&1 || {
     git clone https://aur.archlinux.org/yay.git || { echo "[!] Failed to clone yay repository. Exiting."; exit 1; }
     cd yay
-    makepkg -si || { echo "[!] Failed to install yay. Exiting."; exit 1; }
+    makepkg -si || { echo "[!] Failed to install yay (1). Exiting."; exit 1; }
     cd ..
-    rm -rf yay || { echo "[!] Failed to install yay. Exiting."; exit 1; }
+    rm -rf yay || { echo "[!] Failed to install yay (2). Exiting."; exit 1; }
 }
+
+yay -Syu
 
 # Install Hyprland and other Hyprtools
 # Reference: https://wiki.hyprland.org/Getting-Started/Installation/
@@ -125,6 +131,12 @@ git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM
 # Copy .zshrc config
 cp -f "./$folder/.zshrc" "$HOME/.zshrc" || { echo "[!] Failed to copy zsh config. Exiting."; exit 1; }
 
+# Cleanup installation directory
+cd ..
+if [ -d "hyprinstall" ]; then
+    rm -rf "hyprinstall" || { echo "[!] Failed to delete installation directory. Exiting."; exit 1; }
+fi
+
 # Install nvim
 sudo pacman --noconfirm --needed -S neovim || { echo "[!] Failed to install neovim. Exiting."; exit 1; }
 
@@ -155,11 +167,6 @@ if [[ "$install_optional" =~ ^[Yy]$ ]]; then
     yay --needed -S librewolf chromium tt-bin gparted btop gimp libreoffice obsidian syncthing syncthingtray-qt6 webcord signal-desktop drawio-desktop vlc || { echo "[!] Failed to install optional software. Exiting."; exit 1; }
 fi
 
-# Cleanup installation directory
-cd ..
-if [ -d "hyprinstall" ]; then
-    rm -rf "hyprinstall" || { echo "[!] Failed to delete installation directory. Exiting."; exit 1; }
-fi
-
 # Complete Installation
 echo "[!] Installation successful!"
+echo "[!] Please reboot your system to see the config in action. Run Hyprland to start the compositor."
