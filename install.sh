@@ -159,15 +159,14 @@ fi
 
 # Install other dependencies
 sudo pacman --noconfirm --needed -S xclip wl-clipboard htop powertop fzf fd ffmpeg mpc mpd lxappearance networkmanager ts-node perf pulseaudio thunar thunar-archive-plugin tmux viewnior wireguard-tools xarchiver zip unzip unrar 7zip openvpn || { echo "[!] Failed to install dependency packages (1). Exiting."; exit 1; }
-yay --noconfirm --needed -S nvm catppuccin-gtk-theme-mocha || { echo "[!] Failed to install dependency packages (2). Exiting."; exit 1; }
+yay --noconfirm --needed -S nvm catppuccin-gtk-theme-mocha topgrade-bin || { echo "[!] Failed to install dependency packages (2). Exiting."; exit 1; }
 
 # Install optional software
-read -p "[?] Should optional software be installed? (y/N): " install_optional
-if [[ "$install_optional" =~ ^[Yy]$ ]]; then
-    yay --needed -S librewolf chromium tt-bin gparted btop gimp libreoffice obsidian syncthing syncthingtray-qt6 webcord signal-desktop drawio-desktop vlc || { echo "[!] Failed to install optional software. Exiting."; exit 1; }
-fi
+sudo pacman --needed -S gparted gimp libreoffice-still obsidian syncthing signal-desktop drawio-desktop vlc || { echo "[!] Failed to install optional software. Exiting."; exit 1; }
+yay --needed -S librewolf-bin ungoogled-chromium-bin syncthingtray-qt6 webcord-bin
 
 # Complete Installation
 echo "[!] Installation successful!"
 
+# Start Hyprland
 Hyprland || echo "[!] Please reboot your system to see the config in action. Run Hyprland to start the compositor."
