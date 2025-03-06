@@ -180,14 +180,8 @@ echo "[!] Installation successful!"
 
 # Start Hyprland
 if [[ "$XDG_CURRENT_DESKTOP" != "Hyprland" ]]; then
+    echo -e "exec-once = alacritty -e ~/.config/hypr/optional.sh" >> "$HOME/.config/hypr/hyprland.conf"
     Hyprland &
+else
+    source "$HOME/.config/hypr/optional.sh"
 fi
-
-# Wait for Hyprland to be running
-while ! pgrep -x "Hyprland" > /dev/null; do
-    sleep 1
-done
-
-# Run Alacritty and execute the optional installation script
-echo "[!] Started Installation of optional software!"
-alacritty -e $HOME/.config/hypr/optional.sh &

@@ -2,6 +2,9 @@
 # Copyright (C) 2025 choozn
 # Installation script for optional software
 
+# Remove autostart of this script
+sed -i '/exec-once = alacritty -e ~\/.config\/hypr\/optional.sh/d' ~/.config/hypr/hyprland.conf
+
 echo "[?] Should optional software like a webbrowser be installed?"
 sudo -v || { echo "[!] Failed to gain sudo access. Exiting"; exit 1; }
 
