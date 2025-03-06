@@ -85,6 +85,7 @@ fi
 
 # Copy hyprland folder
 find "./$folder" -maxdepth 1 -mindepth 1 -print0 | xargs -0 cp -rf -t "$HOME/.config/hypr/" || { echo "[!] Failed to copy Hyprland configuration. Exiting."; exit 1; }
+sudo chmod +x $HOME/.config/hypr/optional.sh
 
 # Install yay
 # Reference: https://github.com/Jguer/yay
@@ -104,18 +105,18 @@ sudo pacman --noconfirm --needed -S hyprland hypridle hyprlock hyprpicker || { e
 
 # Install Waybar
 # Reference: https://github.com/Alexays/Waybar/wiki/Installation
-yay --noconfirm --needed -S waybar || { echo "[!] Failed to install Waybar. Exiting."; exit 1; }
+sudo pacman --noconfirm --needed -S waybar || { echo "[!] Failed to install Waybar. Exiting."; exit 1; }
 
 # Install Fonts
 sudo pacman --noconfirm --needed -S ttf-jetbrains-mono ttf-jetbrains-mono-nerd ttf-iosevka-nerd || { echo "[!] Failed to install Fonts. Exiting."; exit 1; }
 
 # Install SwayBG
 # Reference: https://github.com/swaywm/swaybg
-yay --noconfirm --needed -S swaybg || { echo "[!] Failed to install SwayBG. Exiting."; exit 1; }
+sudo pacman --noconfirm --needed -S swaybg || { echo "[!] Failed to install SwayBG. Exiting."; exit 1; }
 
 # Install and configure OhMyZsh
 # Reference: https://ohmyz.sh/#install
-yay --noconfirm --needed -S zsh || { echo "[!] Failed to install zsh. Exiting."; exit 1; }
+sudo pacman --noconfirm --needed -S zsh || { echo "[!] Failed to install zsh. Exiting."; exit 1; }
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended || { echo "[!] Failed to install OhMyZsh. Exiting."; exit 1; }
 fi
@@ -171,17 +172,22 @@ if [ ! -L "$HOME/.config/alacritty" ]; then
 fi
 
 # Install other dependencies
-sudo pacman --noconfirm --needed -S man-db xclip wl-clipboard htop powertop fzf fd ffmpeg mpc mpd lxappearance networkmanager ts-node perf pulseaudio thunar thunar-archive-plugin tmux viewnior wireguard-tools xarchiver zip unzip unrar 7zip openvpn || { echo "[!] Failed to install dependency packages (1). Exiting."; exit 1; }
+sudo pacman --noconfirm --needed -S man-db xclip wl-clipboard htop powertop fzf fd ffmpeg mpc mpd lxappearance networkmanager ts-node perf pulseaudio thunar thunar-archive-plugin tmux viewnior wireguard-tools xarchiver zip unzip unrar 7zip openvpn ranger || { echo "[!] Failed to install dependency packages (1). Exiting."; exit 1; }
 yay --noconfirm --needed -S nvm catppuccin-gtk-theme-mocha topgrade-bin || { echo "[!] Failed to install dependency packages (2). Exiting."; exit 1; }
-
-# Install optional software
-sudo pacman --noconfirm --needed -S gparted gimp libreoffice-still obsidian syncthing signal-desktop drawio-desktop vlc || { echo "[!] Failed to install optional software (1). Exiting."; exit 1; }
-yay --noconfirm --needed -S librewolf-bin ungoogled-chromium-bin syncthingtray-qt6 webcord-bin || { echo "[!] Failed to install optional software (2). Exiting."; exit 1; }
 
 # Complete Installation
 echo "[!] Installation successful!"
 
 # Start Hyprland
 if [[ "$XDG_CURRENT_DESKTOP" != "Hyprland" ]]; then
-    Hyprland || echo "[!] Please reboot your system to see the config in action. Run Hyprland to start the compositor."
+    Hyprland & || echo "[!] Please reboot your system to see the config in action. Run Hyprland to start the compositor."
 fi
+
+# Wait for Hyprland to be running
+while ! pgrep -x "Hyprland" > /dev/null; do
+    sleep 1
+done
+
+# Run Alacritty and execute the optional installation script
+echo "[!] Started Installation of optional software!"
+alacritty -e $HOME/.config/hypr/optional.sh &
