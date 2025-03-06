@@ -32,15 +32,10 @@ if [ ! -w "$HOME/.config" ]; then
     exit 1
 fi
 
-# Create .config/hypr directory if its missing
-if [ ! -d "$HOME/.config/hypr" ]; then
-    mkdir "$HOME/.config/hypr" || { echo "[!] Failed to create .config/hypr directory. Exiting."; exit 1; }
-fi
-
 # Backup previous configs
 backup_folder="hypr_backup_$(date +'%Y-%m-%d_%H-%M-%S')"
 backup_path="$HOME/.config/$backup_folder"
-if [ ! -d $backup_path ]; then
+if [[ (-f "$HOME/.zshrc" || -d "$HOME/.config/hypr" || -d "$HOME/.config/alacritty") && ! -d "$backup_path" ]]; then
     mkdir -p $backup_path
 fi
 
@@ -75,13 +70,18 @@ fi
 cd "hyprinstall"
 
 # Update pacman database and do a system update
-sudo pacman --noconfirm -Syyu
+sudo pacman --noconfirm -Syyu || { echo "[!] Failed to run system update with pacman. Exiting."; exit 1; }
 
 # Install dependencies to install
 sudo pacman --noconfirm -S --needed git base-devel || { echo "[!] Failed to install git or base-devel. Exiting."; exit 1; }
 
 # Copy repository
 git clone $repository || { echo "[!] Failed to clone dotfiles. Exiting."; exit 1; } 
+
+# Create .config/hypr directory if its missing
+if [ ! -d "$HOME/.config/hypr" ]; then
+    mkdir "$HOME/.config/hypr" || { echo "[!] Failed to create .config/hypr directory. Exiting."; exit 1; }
+fi
 
 # Copy hyprland folder
 find "./$folder" -maxdepth 1 -mindepth 1 -print0 | xargs -0 cp -rf -t "$HOME/.config/hypr/" || { echo "[!] Failed to copy Hyprland configuration. Exiting."; exit 1; }
@@ -96,7 +96,7 @@ command -v yay >/dev/null 2>&1 || {
     rm -rf yay-bin || { echo "[!] Failed to install yay (2). Exiting."; exit 1; }
 }
 
-yay --noconfirm -Syu
+yay --noconfirm -Syu || { echo "[!] Failed to run system update with yay. Exiting."; exit 1; }
 
 # Install Hyprland and other Hyprtools
 # Reference: https://wiki.hyprland.org/Getting-Started/Installation/
