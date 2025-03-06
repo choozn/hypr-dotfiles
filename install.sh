@@ -180,7 +180,7 @@ echo "[!] Installation successful!"
 
 # Start Hyprland
 if [[ "$XDG_CURRENT_DESKTOP" != "Hyprland" ]]; then
-    Hyprland & || echo "[!] Please reboot your system to see the config in action. Run Hyprland to start the compositor."
+    Hyprland &
 fi
 
 # Wait for Hyprland to be running
