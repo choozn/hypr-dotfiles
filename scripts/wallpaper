@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
+# Copyright (C) 2025 choozn
+# Wallpaper script
+
+# Kill all instances of swaybg
 pkill swaybg
-# WALLPAPER='/home/lasse/.config/hypr/wallpapers/wallpaper.jpg'
-WALLPAPER='/home/lasse/.config/hypr/wallpapers/wallpaper.png'
-swaybg --output '*' --mode fill --image "$WALLPAPER"
+
+# Extract wallpaper from hyprtheme config file
+wallpaper=$(awk -F= '/^\$wallpaper/ {gsub(/^[ \t]+|[ \t]+$/, "", $2); print $2}' ../hyprtheme.conf)
+wallpaper_path="/home/lasse/.config/hypr/wallpapers/$wallpaper"
+
+# Start swaybg
+swaybg --output '*' --mode fill --image "$wallpaper_path"

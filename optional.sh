@@ -9,6 +9,8 @@ echo "[!] Welcome (back) home!"
 echo "[!] There are still some packages missing that would enrich your experience."
 echo "[?] Should I install them for you?"
 
+echo "\n"
+
 sudo -v || { echo "[!] Failed to gain sudo access. Exiting"; exit 1; }
 
 # Install yay
