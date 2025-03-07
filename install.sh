@@ -56,6 +56,12 @@ fi
 
 echo "[!] The backup of previous config files has finished."
 
+# Update pacman database and do a system update
+sudo pacman --noconfirm -Syyu || { echo "[!] Failed to run system update with pacman. Exiting."; exit 1; }
+
+# Install dependencies to install
+sudo pacman --noconfirm -S --needed git base-devel || { echo "[!] Failed to install git or base-devel. Exiting."; exit 1; }
+
 # Clear installation folder
 if [ -d "hyprinstall" ]; then
     rm -rf "hyprinstall" || { echo "[!] Failed to delete already existing installation directory. Exiting."; exit 1; }
@@ -69,12 +75,6 @@ fi
 # Move into installation directory
 cd "hyprinstall"
 
-# Update pacman database and do a system update
-sudo pacman --noconfirm -Syyu || { echo "[!] Failed to run system update with pacman. Exiting."; exit 1; }
-
-# Install dependencies to install
-sudo pacman --noconfirm -S --needed git base-devel || { echo "[!] Failed to install git or base-devel. Exiting."; exit 1; }
-
 # Copy repository
 git clone $repository || { echo "[!] Failed to clone dotfiles. Exiting."; exit 1; } 
 
@@ -87,17 +87,11 @@ fi
 find "./$folder" -maxdepth 1 -mindepth 1 -print0 | xargs -0 cp -rf -t "$HOME/.config/hypr/" || { echo "[!] Failed to copy Hyprland configuration. Exiting."; exit 1; }
 sudo chmod +x $HOME/.config/hypr/optional.sh
 
-# Install yay
-# Reference: https://github.com/Jguer/yay
-command -v yay >/dev/null 2>&1 || {
-    git clone https://aur.archlinux.org/yay-bin.git || { echo "[!] Failed to clone yay repository. Exiting."; exit 1; }
-    cd yay-bin
-    makepkg -si --noconfirm || { echo "[!] Failed to install yay (1). Exiting."; exit 1; }
-    cd ..
-    rm -rf yay-bin || { echo "[!] Failed to install yay (2). Exiting."; exit 1; }
-}
-
-yay --noconfirm -Syu || { echo "[!] Failed to run system update with yay. Exiting."; exit 1; }
+# Cleanup installation directory
+cd ..
+if [ -d "hyprinstall" ]; then
+    rm -rf "hyprinstall" || { echo "[!] Failed to delete installation directory. Exiting."; exit 1; }
+fi
 
 # Install Hyprland and other Hyprtools
 # Reference: https://wiki.hyprland.org/Getting-Started/Installation/
@@ -145,12 +139,6 @@ fi
 ln -s "$HOME/.config/hypr/zsh/.zshrc" "$HOME/.zshrc" || { echo "[!] Failed to link zsh config. Exiting."; exit 1; }
 ln -s "$HOME/.config/hypr/zsh/choozn.zsh-theme" "$HOME/.oh-my-zsh/custom/themes/choozn.zsh-theme" || { echo "[!] Failed to link zsh config. Exiting."; exit 1; }
 
-# Cleanup installation directory
-cd ..
-if [ -d "hyprinstall" ]; then
-    rm -rf "hyprinstall" || { echo "[!] Failed to delete installation directory. Exiting."; exit 1; }
-fi
-
 # Install nvim
 sudo pacman --noconfirm --needed -S neovim || { echo "[!] Failed to install neovim. Exiting."; exit 1; }
 
@@ -172,8 +160,9 @@ if [ ! -L "$HOME/.config/alacritty" ]; then
 fi
 
 # Install other dependencies
-sudo pacman --noconfirm --needed -S man-db xclip wl-clipboard htop powertop fzf fd ffmpeg mpc mpd lxappearance networkmanager ts-node perf pulseaudio thunar thunar-archive-plugin tmux viewnior wireguard-tools xarchiver zip unzip unrar 7zip openvpn ranger || { echo "[!] Failed to install dependency packages (1). Exiting."; exit 1; }
-yay --noconfirm --needed -S nvm catppuccin-gtk-theme-mocha topgrade-bin || { echo "[!] Failed to install dependency packages (2). Exiting."; exit 1; }
+sudo pacman --noconfirm --needed -S man-db xclip wl-clipboard htop powertop fzf fd ffmpeg mpc mpd networkmanager pulseaudio thunar thunar-archive-plugin tmux viewnior wireguard-tools xarchiver zip unzip unrar 7zip openvpn ranger || { echo "[!] Failed to install dependency packages. Exiting."; exit 1; }
+
+# TODO: Install gtk theme => catppuccin-gtk-theme-mocha 
 
 # Complete Installation
 echo "[!] Installation successful!"
