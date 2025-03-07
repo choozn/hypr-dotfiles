@@ -6,8 +6,8 @@
 pkill swaybg
 
 # Extract wallpaper from hyprtheme config file
-wallpaper=$(awk -F= '/^\$wallpaper/ {gsub(/^[ \t]+|[ \t]+$/, "", $2); print $2}' ../hyprtheme.conf)
-wallpaper_path="/home/lasse/.config/hypr/wallpapers/$wallpaper"
+wallpaper=$(awk -F= '/^\$wallpaper/ {gsub(/^[ \t]+|[ \t]+$/, "", $2); print $2}' "$HOME/.config/hypr/hyprtheme.conf")
+wallpaper_path="$HOME/.config/hypr/wallpapers/$wallpaper"
 
 # Start swaybg
 swaybg --output '*' --mode fill --image "$wallpaper_path"
