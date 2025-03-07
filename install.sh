@@ -95,18 +95,12 @@ fi
 
 # Install Hyprland and other Hyprtools
 # Reference: https://wiki.hyprland.org/Getting-Started/Installation/
-sudo pacman --noconfirm --needed -S hyprland hypridle hyprlock hyprpicker || { echo "[!] Failed to install Hyprland packages. Exiting."; exit 1; }
-
-# Install Waybar
 # Reference: https://github.com/Alexays/Waybar/wiki/Installation
-sudo pacman --noconfirm --needed -S waybar || { echo "[!] Failed to install Waybar. Exiting."; exit 1; }
+# Reference: https://github.com/swaywm/swaybg
+sudo pacman --noconfirm --needed -S hyprland hypridle hyprlock hyprpicker waybar swaybg || { echo "[!] Failed to install Hyprland packages. Exiting."; exit 1; }
 
 # Install Fonts
 sudo pacman --noconfirm --needed -S ttf-jetbrains-mono ttf-jetbrains-mono-nerd ttf-iosevka-nerd || { echo "[!] Failed to install Fonts. Exiting."; exit 1; }
-
-# Install SwayBG
-# Reference: https://github.com/swaywm/swaybg
-sudo pacman --noconfirm --needed -S swaybg || { echo "[!] Failed to install SwayBG. Exiting."; exit 1; }
 
 # Install and configure OhMyZsh
 # Reference: https://ohmyz.sh/#install
@@ -122,8 +116,6 @@ fi
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
-
-# Configure zsh
 
 # Remove old .zshrc config
 if [ -f "$HOME/.zshrc" ]; then
