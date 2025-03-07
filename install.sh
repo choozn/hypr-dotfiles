@@ -169,7 +169,7 @@ echo "[!] Installation successful!"
 
 # Start Hyprland
 if [[ "$XDG_CURRENT_DESKTOP" != "Hyprland" ]]; then
-    echo -e "exec-once = alacritty -e ~/.config/hypr/optional.sh" >> "$HOME/.config/hypr/hyprland.conf"
+    echo -e 'exec-once = $alacritty -f -e ~/.config/hypr/optional.sh' >> "$HOME/.config/hypr/hyprland.conf"
     Hyprland &
 else
     source "$HOME/.config/hypr/optional.sh"

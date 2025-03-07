@@ -3,7 +3,7 @@
 # Installation script for optional software
 
 # Remove autostart of this script
-sed -i '/exec-once = alacritty -e ~\/.config\/hypr\/optional.sh/d' ~/.config/hypr/hyprland.conf
+sed -i '/exec-once = $alacritty -f -e ~\/.config\/hypr\/optional.sh/d' "$HOME/.config/hypr/hyprland.conf"
 
 echo "[!] Welcome (back) home!"
 echo "[!] There are still some packages missing that would enrich your experience."
