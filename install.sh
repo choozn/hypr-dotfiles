@@ -154,6 +154,10 @@ fi
 # Install other dependencies
 sudo pacman --noconfirm --needed -S man-db xclip wl-clipboard htop powertop fzf fd ffmpeg mpc mpd networkmanager pulseaudio thunar thunar-archive-plugin tmux viewnior wireguard-tools xarchiver zip unzip unrar 7zip openvpn ranger || { echo "[!] Failed to install dependency packages. Exiting."; exit 1; }
 
+# Activate NetworkManager
+sudo systemctl enable NetworkManager
+sudo systemctl restart NetworkManager
+
 # TODO: Install gtk theme => catppuccin-gtk-theme-mocha 
 
 # Complete Installation

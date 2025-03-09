@@ -1,4 +1,5 @@
 #!/bin/bash
+
 echo \
 'Suspend   | loginctl lock-session ${XDG_SESSION_ID-} & systemctl suspend
 Logout    | killall Hyprland 
@@ -10,5 +11,3 @@ Sleep     | systemctl hibernate'\
 | cut -d "|" -f2 \
 | xargs -i -t zsh -c "{}"\
 &>/dev/null
-
-# hyprctl dispatch exit 1
