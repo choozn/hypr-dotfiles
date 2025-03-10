@@ -26,7 +26,7 @@ cat << "EOF"
 EOF
 
 echo "[!] To install the dotfiles and other dependencies, I'll need you to give me sudo privileges."
-echo "[!] Don't worry, I’m a well-behaved kitty! No messes, just magic."
+echo "[!] Don't worry, I'm a well-behaved kitty! No messes, just magic."
 
 # Request sudo privileges
 sudo -v || { echo "[!] Failed to gain sudo access."; exit 1; }
