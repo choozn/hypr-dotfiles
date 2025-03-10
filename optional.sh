@@ -23,7 +23,7 @@ if [[ "$answer" != "y" && "$answer" != "Y" ]]; then
 fi
 
 echo -e "\n[!] To install the packages, I'll need you to give me sudo privileges."
-echo -e "[!] No need to worry, I’m a tidy kitty! Everything will be purrfectly handled.\n"
+echo -e "[!] No need to worry, Everything will be purrfectly handled.\n"
 
 # Request sudo privileges
 sudo -v || { echo "[!] Failed to gain sudo access. Exiting"; exit 1; }
