@@ -107,10 +107,12 @@ fi
 # Reference: https://wiki.hyprland.org/Getting-Started/Installation/
 # Reference: https://github.com/Alexays/Waybar/wiki/Installation
 # Reference: https://github.com/swaywm/swaybg
-sudo pacman --noconfirm --needed -S hyprland hypridle hyprlock hyprpicker waybar swaybg || { echo "[!] Failed to install Hyprland packages. Exiting."; exit 1; }
+# Reference: https://wiki.hyprland.org/Useful-Utilities/Must-have/
+# Reference: https://wiki.hyprland.org/Hypr-Ecosystem/xdg-desktop-portal-hyprland/
+sudo pacman --noconfirm --needed -S aquamarine hyprland hyprlang hyprcursor hyprutils hyprgraphics hypridle hyprlock hyprpicker hyprwayland-scanner waybar swaybg qt5-wayland qt6-wayland xdg-desktop-portal-hyprland pipewire || { echo "[!] Failed to install Hyprland packages. Exiting."; exit 1; }
 
 # Install Fonts
-sudo pacman --noconfirm --needed -S ttf-jetbrains-mono ttf-jetbrains-mono-nerd ttf-iosevka-nerd || { echo "[!] Failed to install Fonts. Exiting."; exit 1; }
+sudo pacman --noconfirm --needed -S ttf-jetbrains-mono ttf-jetbrains-mono-nerd ttf-iosevka-nerd noto-fonts || { echo "[!] Failed to install Fonts. Exiting."; exit 1; }
 
 # Install and configure OhMyZsh
 # Reference: https://ohmyz.sh/#install
@@ -162,7 +164,7 @@ if [ ! -L "$HOME/.config/alacritty" ]; then
 fi
 
 # Install other dependencies
-sudo pacman --noconfirm --needed -S man-db xclip wl-clipboard htop powertop fzf fd ffmpeg mpc mpd networkmanager bluez bluetui pulseaudio thunar thunar-archive-plugin tmux viewnior wireguard-tools xarchiver zip unzip unrar 7zip openvpn ranger || { echo "[!] Failed to install dependency packages. Exiting."; exit 1; }
+sudo pacman --noconfirm --needed -S man-db xclip wl-clipboard htop powertop fzf fd ffmpeg mpc mpd networkmanager bluez bluetui systemctl-tui pulseaudio thunar thunar-archive-plugin tmux viewnior wireguard-tools xarchiver zip unzip unrar 7zip openvpn ranger || { echo "[!] Failed to install dependency packages. Exiting."; exit 1; }
 
 # Activate NetworkManager and Bluetooth
 sudo systemctl enable NetworkManager
