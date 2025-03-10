@@ -16,7 +16,16 @@ if [[ $EUID -eq 0 ]]; then
    exit 1
 fi
 
-echo "[!] Starting installation of hypr-dotfiles by @choozn!"
+# Welcome message
+cat << "EOF"
+ /\_/\  
+( o.o )  Meow! I'm whisker and I'll help you to make this place feel like home!.
+ > ^ <          Let's get those dotfiles and dependencies installed!
+
+EOF
+
+echo "[!] To install the dotfiles and other dependencies, I'll need you to give me sudo privileges."
+echo "[!] Don't worry, I’m a well-behaved kitty! No messes, just magic."
 
 # Request sudo privileges
 sudo -v || { echo "[!] Failed to gain sudo access."; exit 1; }
@@ -152,11 +161,13 @@ if [ ! -L "$HOME/.config/alacritty" ]; then
 fi
 
 # Install other dependencies
-sudo pacman --noconfirm --needed -S man-db xclip wl-clipboard htop powertop fzf fd ffmpeg mpc mpd networkmanager pulseaudio thunar thunar-archive-plugin tmux viewnior wireguard-tools xarchiver zip unzip unrar 7zip openvpn ranger || { echo "[!] Failed to install dependency packages. Exiting."; exit 1; }
+sudo pacman --noconfirm --needed -S man-db xclip wl-clipboard htop powertop fzf fd ffmpeg mpc mpd networkmanager bluez bluetui pulseaudio thunar thunar-archive-plugin tmux viewnior wireguard-tools xarchiver zip unzip unrar 7zip openvpn ranger || { echo "[!] Failed to install dependency packages. Exiting."; exit 1; }
 
-# Activate NetworkManager
+# Activate NetworkManager and Bluetooth
 sudo systemctl enable NetworkManager
-sudo systemctl restart NetworkManager
+sudo systemctl start NetworkManager
+sudo systemctl enable bluetooth.service
+sudo systemctl start bluetooth.service
 
 # TODO: Install gtk theme => catppuccin-gtk-theme-mocha 
 

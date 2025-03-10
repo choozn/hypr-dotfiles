@@ -5,12 +5,27 @@
 # Remove autostart of this script
 sed -i '/exec-once = $alacritty -f -e ~\/.config\/hypr\/optional.sh/d' "$HOME/.config/hypr/hyprland.conf"
 
-echo "[!] Welcome (back) home!"
+cat << "EOF"
+ _._     _,-'""`-._
+(,-.`._,'(       |\`-/|
+    `-.-' \ )-`( , o o)
+          `-    \`_`"'-  Meow! Welcome (back), human!
+         
+EOF
+
 echo "[!] There are still some packages missing that would enrich your experience."
-echo "[?] Should I install them for you?"
 
-echo -e "\n"
+read -p "[?] Should I install them for you? (y/n)" answer
+answer=${answer:-y}
+if [[ "$answer" != "y" && "$answer" != "Y" ]]; then
+    echo "[!] Alright, maybe next time. Take care!"
+    exit 0
+fi
 
+echo -e "\n[!] To install the packages, I'll need you to give me sudo privileges."
+echo -e "[!] No need to worry, I’m a tidy kitty! Everything will be purrfectly handled.\n"
+
+# Request sudo privileges
 sudo -v || { echo "[!] Failed to gain sudo access. Exiting"; exit 1; }
 
 # Install yay
@@ -29,7 +44,7 @@ yay --noconfirm -Syu || { echo "[!] Failed to run system update with yay. Exitin
 sudo pacman --noconfirm --needed -S firefox || { echo "[!] Failed to install firefox. Exiting."; exit 1; }
 
 # Install topgrade
-yay --noconfirm --needed -S topgrade-bin || { echo "[!] Failed to install optional software (2). Exiting."; exit 1; }
+yay --noconfirm --needed -S topgrade-bin || { echo "[!] Failed to install topgrade. Exiting."; exit 1; }
 
 # Install typescript and node tooling
 sudo pacman --noconfirm --needed -S ts-node || { echo "[!] Failed to install optional software (1). Exiting."; exit 1; }
@@ -37,8 +52,12 @@ yay --noconfirm --needed -S nvm || { echo "[!] Failed to install optional softwa
 
 # Install optional other software
 sudo pacman --noconfirm --needed -S gparted gimp libreoffice-still obsidian syncthing signal-desktop drawio-desktop vlc || { echo "[!] Failed to install optional software (1). Exiting."; exit 1; }
-yay --noconfirm --needed -S ungoogled-chromium-bin syncthingtray-qt6 webcord-bin || { echo "[!] Failed to install optional software (2). Exiting."; exit 1; }
+yay --noconfirm --needed -S tt-bin webcord-bin || { echo "[!] Failed to install optional software (2). Exiting."; exit 1; }
 
-topgrade
+echo -e "[!] Installation successful!\n"
 
-echo "[!] Installation successful!"
+cat << "EOF"
+ /\_/\  
+( ^w^ )  All done! Your setup is nice and cozy now! See you arround!
+ > ^ <  
+EOF
