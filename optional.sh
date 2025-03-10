@@ -3,7 +3,7 @@
 # Installation script for optional software
 
 # Remove autostart of this script
-sed -i '/exec-once = $alacritty -f -e ~\/.config\/hypr\/optional.sh/d' "$HOME/.config/hypr/hyprland.conf"
+sed -i '/exec-once = alacritty --class "alacritty-float,alacritty-float" -e zsh -i -c "~\/.config\/hypr\/optional.sh; exec zsh"/d' "$HOME/.config/hypr/hyprland.conf"
 
 cat << "EOF"
  _._     _,-'""`-._
@@ -15,7 +15,7 @@ EOF
 
 echo "[!] There are still some packages missing that would enrich your experience."
 
-read -p "[?] Should I install them for you? (y/n)" answer
+read -p "[?] Should I install them for you? (y/n) " answer
 answer=${answer:-y}
 if [[ "$answer" != "y" && "$answer" != "Y" ]]; then
     echo "[!] Alright, maybe next time. Take care!"

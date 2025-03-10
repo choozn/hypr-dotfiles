@@ -172,11 +172,11 @@ sudo systemctl start bluetooth.service
 # TODO: Install gtk theme => catppuccin-gtk-theme-mocha 
 
 # Complete Installation
-echo "[!] Installation successful!"
+echo "[!] Installation of main dependencies successful!"
 
 # Start Hyprland
 if [[ "$XDG_CURRENT_DESKTOP" != "Hyprland" ]]; then
-    echo -e 'exec-once = $alacritty -f -e ~/.config/hypr/optional.sh' >> "$HOME/.config/hypr/hyprland.conf"
+    echo -e 'exec-once = alacritty --class "alacritty-float,alacritty-float" -e zsh -i -c "~/.config/hypr/optional.sh; exec zsh"' >> "$HOME/.config/hypr/hyprland.conf"
     Hyprland &
 else
     source "$HOME/.config/hypr/optional.sh"
