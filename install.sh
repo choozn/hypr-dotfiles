@@ -17,6 +17,7 @@ if [[ $EUID -eq 0 ]]; then
 fi
 
 # Welcome message
+clear
 cat << "EOF"
  /\_/\  
 ( o.o )  Meow! I'm whisker and I'll help you to make this place feel like home!.
