@@ -16,7 +16,7 @@ fi
 ~/.config/hypr/scripts/wallpaper &
 
 # Apply theme
-~/.config/hypr/scripts/gtkthemes &
+~/.config/hypr/scripts/gtktheme &
 
 # Lauch notification daemon (mako)
 ~/.config/hypr/scripts/notifications &
