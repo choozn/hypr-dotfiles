@@ -19,6 +19,7 @@ fi
 # Welcome message
 clear
 cat << "EOF"
+
  /\_/\  
 ( o.o )  Meow! I'm whisker and I'll help you to make this place feel like home!.
  > ^ <          Let's get those dotfiles and dependencies installed!
@@ -26,7 +27,7 @@ cat << "EOF"
 EOF
 
 echo "[!] To install the dotfiles and other dependencies, I'll need you to give me sudo privileges."
-echo "[!] Don't worry, I'm a well-behaved kitty! No messes, just magic."
+echo -e "[!] Don't worry, I'm a well-behaved kitty! No messes, just magic.\n"
 
 # Request sudo privileges
 sudo -v || { echo "[!] Failed to gain sudo access."; exit 1; }

@@ -45,6 +45,7 @@ sudo pacman --noconfirm --needed -S firefox || { echo "[!] Failed to install fir
 
 # Install topgrade
 yay --noconfirm --needed -S topgrade-bin || { echo "[!] Failed to install topgrade. Exiting."; exit 1; }
+echo -e 'exec-once = alacritty --class "alacritty-float,alacritty-float" -e zsh -i -c "topgrade; exec zsh"' >> "$HOME/.config/hypr/hyprland.conf"
 
 # Install typescript and node tooling
 sudo pacman --noconfirm --needed -S ts-node || { echo "[!] Failed to install optional software (1). Exiting."; exit 1; }
