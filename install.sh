@@ -99,7 +99,7 @@ fi
 cd "hyprinstall"
 
 # Copy repository
-git clone $repository || { echo "[!] Failed to clone dotfiles. Exiting."; exit 1; } 
+git clone --depth=1 --branch=master $repository || { echo "[!] Failed to clone dotfiles. Exiting."; exit 1; } 
 
 # Create .config/hypr directory if its missing
 if [ ! -d "$HOME/.config/hypr" ]; then
@@ -138,9 +138,9 @@ fi
 # Reference: https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md
 # Reference: https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md
 # Reference: https://github.com/zsh-users/zsh-history-substring-search
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
+git clone --depth=1 --branch=master https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+git clone --depth=1 --branch=master https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+git clone --depth=1 --branch=master https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
 
 # Remove old .zshrc config
 if [ -f "$HOME/.zshrc" ]; then

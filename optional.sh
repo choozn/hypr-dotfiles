@@ -32,7 +32,7 @@ sudo -v || { echo "[!] Failed to gain sudo access. Exiting"; exit 1; }
 # Install yay
 # Reference: https://github.com/Jguer/yay
 command -v yay >/dev/null 2>&1 || {
-    git clone https://aur.archlinux.org/yay-bin.git || { echo "[!] Failed to clone yay repository. Exiting."; exit 1; }
+    git clone --depth=1 https://aur.archlinux.org/yay-bin.git || { echo "[!] Failed to clone yay repository. Exiting."; exit 1; }
     cd yay-bin
     makepkg -si --noconfirm || { echo "[!] Failed to install yay (1). Exiting."; exit 1; }
     cd ..
@@ -46,6 +46,7 @@ sudo pacman --noconfirm --needed -S firefox || { echo "[!] Failed to install fir
 
 # Install topgrade and autostart it on startup
 yay --noconfirm --needed -S topgrade-bin || { echo "[!] Failed to install topgrade. Exiting."; exit 1; }
+# TODO: If not already in config file
 echo -e 'exec-once = alacritty --class "alacritty-float,alacritty-float" -e zsh -i -c "topgrade; exec zsh"' >> "$HOME/.config/hypr/hyprland.conf"
 
 # Install Catppuccin GTK Theme
