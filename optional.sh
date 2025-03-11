@@ -40,20 +40,16 @@ command -v yay >/dev/null 2>&1 || {
 
 yay --noconfirm -Syu || { echo "[!] Failed to run system update with yay. Exiting."; exit 1; }
 
-# Install firefox
-sudo pacman --noconfirm --needed -S firefox || { echo "[!] Failed to install firefox. Exiting."; exit 1; }
-
 # Install topgrade
 yay --noconfirm --needed -S topgrade-bin || { echo "[!] Failed to install topgrade. Exiting."; exit 1; }
 echo -e 'exec-once = alacritty --class "alacritty-float,alacritty-float" -e zsh -i -c "topgrade; exec zsh"' >> "$HOME/.config/hypr/hyprland.conf"
 
-# Install typescript and node tooling
-sudo pacman --noconfirm --needed -S ts-node || { echo "[!] Failed to install optional software (1). Exiting."; exit 1; }
-yay --noconfirm --needed -S nvm || { echo "[!] Failed to install optional software (2). Exiting."; exit 1; }
+# Install firefox
+sudo pacman --noconfirm --needed -S firefox || { echo "[!] Failed to install firefox. Exiting."; exit 1; }
 
 # Install optional other software
-sudo pacman --noconfirm --needed -S gparted gimp libreoffice-still obsidian syncthing signal-desktop drawio-desktop vlc || { echo "[!] Failed to install optional software (1). Exiting."; exit 1; }
-yay --noconfirm --needed -S tt-bin webcord-bin || { echo "[!] Failed to install optional software (2). Exiting."; exit 1; }
+sudo pacman --noconfirm --needed -S gparted gimp libreoffice-still obsidian syncthing vlc || { echo "[!] Failed to install optional software (1). Exiting."; exit 1; }
+yay --noconfirm --needed -S webcord-bin || { echo "[!] Failed to install optional software (2). Exiting."; exit 1; }
 
 echo -e "[!] Installation successful!\n"
 
