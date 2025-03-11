@@ -14,6 +14,7 @@ cat << "EOF"
 EOF
 
 echo "[!] There are still some packages missing that would enrich your experience."
+echo "[!] This includes AUR packages and themes. It is recommended to install them."
 
 read -p "[?] Should I install them for you? (y/n) " answer
 answer=${answer:-y}
@@ -40,16 +41,37 @@ command -v yay >/dev/null 2>&1 || {
 
 yay --noconfirm -Syu || { echo "[!] Failed to run system update with yay. Exiting."; exit 1; }
 
-# Install topgrade
+# Install topgrade and autostart it on startup
 yay --noconfirm --needed -S topgrade-bin || { echo "[!] Failed to install topgrade. Exiting."; exit 1; }
 echo -e 'exec-once = alacritty --class "alacritty-float,alacritty-float" -e zsh -i -c "topgrade; exec zsh"' >> "$HOME/.config/hypr/hyprland.conf"
+
+# Install Catppuccin GTK Theme
+yay --noconfirm --needed -S catppuccin-gtk-theme-mocha || { echo "[!] Failed to install catppuccin-gtk-theme. Exiting."; exit 1; }
+
+# Remove old xsettingsd config
+if [ -f "$HOME/.config/xsettingsd/xsettingsd.conf" ]; then
+    rm "$HOME/.config/xsettingsd/xsettingsd.conf" || { echo "[!] Failed to remove old xsettingsd config. Exiting."; exit 1; }
+fi
+
+# Remove old .zshrc config
+if [ -f "$HOME/.config/gtk-3.0/settings.ini" ]; then
+    rm "$HOME/.config/gtk-3.0/settings.ini" || { echo "[!] Failed to remove old gtk-3 config. Exiting."; exit 1; }
+fi
+
+# Link gtk theme config files
+mkdir -p "$HOME/.config/xsettingsd/" || { echo "[!] Failed to link xsettingsd config (1). Exiting."; exit 1; }
+mkdir -p "$HOME/.config/gtk-3.0/" || { echo "[!] Failed to link gtk-3 config (1). Exiting."; exit 1; }
+ln -s "$HOME/.config/hypr/gtk/xsettingsd.conf" "$HOME/.config/xsettingsd/xsettingsd.conf" || { echo "[!] Failed to link xsettingsd config (2). Exiting."; exit 1; }
+ln -s "$HOME/.config/hypr/gtk/gtk-3.0/settings.ini" "$HOME/.config/gtk-3.0/settings.ini" || { echo "[!] Failed to link gtk-3 config (2). Exiting."; exit 1; }
+
+gsettings set org.gnome.desktop.interface gtk-theme "catppuccin-mocha-teal-standard+default"
 
 # Install firefox
 sudo pacman --noconfirm --needed -S firefox || { echo "[!] Failed to install firefox. Exiting."; exit 1; }
 
 # Install optional other software
 sudo pacman --noconfirm --needed -S gparted gimp libreoffice-still obsidian syncthing vlc || { echo "[!] Failed to install optional software (1). Exiting."; exit 1; }
-yay --noconfirm --needed -S webcord-bin || { echo "[!] Failed to install optional software (2). Exiting."; exit 1; }
+yay --noconfirm --needed -S nwg-look || { echo "[!] Failed to install optional software (2). Exiting."; exit 1; }
 
 echo -e "[!] Installation successful!\n"
 

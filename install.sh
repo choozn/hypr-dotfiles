@@ -46,22 +46,34 @@ fi
 # Backup previous configs
 backup_folder="hypr_backup_$(date +'%Y-%m-%d_%H-%M-%S')"
 backup_path="$HOME/.config/$backup_folder"
-if [[ (-f "$HOME/.zshrc" || -d "$HOME/.config/hypr" || -d "$HOME/.config/alacritty") && ! -d "$backup_path" ]]; then
-    mkdir -p $backup_path
-fi
 
 # Backup .zshrc
 if [ -f "$HOME/.zshrc" ]; then
-    cp "$HOME/.zshrc" "$backup_path/.zshrc" || { echo "[!] Failed to backup .zshrc config. Exiting."; exit 1; }
+    mkdir -p "$backup_path/zsh/"
+    cp "$HOME/.zshrc" "$backup_path/zsh/" || { echo "[!] Failed to backup .zshrc config. Exiting."; exit 1; }
+fi
+
+# Backup gtk-3/settings.ini
+if [ -f "$HOME/.config/gtk-3.0/settings.ini" ]; then
+    mkdir -p "$backup_path/gtk-3.0/"
+    cp "$HOME/.config/gtk-3.0/settings.ini" "$backup_path/gtk-3.0/" || { echo "[!] Failed to backup gtk-3/settings.ini config. Exiting."; exit 1; }
+fi
+
+# Backup xsettingsd.conf 
+if [ -f "$HOME/.config/xsettingsd/xsettingsd.conf" ]; then
+    mkdir -p "$backup_path/xsettingsd/"
+    cp "$HOME/.config/xsettingsd/xsettingsd.conf" "$backup_path/xsettingsd/" || { echo "[!] Failed to backup xsettingsd config. Exiting."; exit 1; }
 fi
 
 # Backup .config/hypr
 if [ -d "$HOME/.config/hypr" ]; then
+    mkdir -p "$backup_path/hypr/"
     cp -r "$HOME/.config/hypr/" "$backup_path/hypr/" || { echo "[!] Failed to backup hyprland config files. Exiting."; exit 1; }
 fi
 
 # Backup .config/alacritty
 if [ -d "$HOME/.config/alacritty" ]; then
+    mkdir -p "$backup_path/alacritty/"
     cp -r "$HOME/.config/alacritty/" "$backup_path/alacritty/" || { echo "[!] Failed to backup alacritty config files. Exiting."; exit 1; }
 fi
 
@@ -172,8 +184,6 @@ sudo systemctl enable NetworkManager
 sudo systemctl start NetworkManager
 sudo systemctl enable bluetooth.service
 sudo systemctl start bluetooth.service
-
-# TODO: Install gtk theme => catppuccin-gtk-theme-mocha 
 
 # Complete Installation
 echo "[!] Installation of main dependencies successful!"
