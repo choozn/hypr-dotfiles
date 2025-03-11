@@ -1,4 +1,5 @@
-## Colors configuration
+# Alacritty color config 
+
 [colors.primary]
 # background = "#0B132B"
 

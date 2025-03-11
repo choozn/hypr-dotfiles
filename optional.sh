@@ -41,6 +41,9 @@ command -v yay >/dev/null 2>&1 || {
 
 yay --noconfirm -Syu || { echo "[!] Failed to run system update with yay. Exiting."; exit 1; }
 
+# Install firefox
+sudo pacman --noconfirm --needed -S firefox || { echo "[!] Failed to install firefox. Exiting."; exit 1; }
+
 # Install topgrade and autostart it on startup
 yay --noconfirm --needed -S topgrade-bin || { echo "[!] Failed to install topgrade. Exiting."; exit 1; }
 echo -e 'exec-once = alacritty --class "alacritty-float,alacritty-float" -e zsh -i -c "topgrade; exec zsh"' >> "$HOME/.config/hypr/hyprland.conf"
@@ -64,10 +67,8 @@ mkdir -p "$HOME/.config/gtk-3.0/" || { echo "[!] Failed to link gtk-3 config (1)
 ln -s "$HOME/.config/hypr/gtk/xsettingsd.conf" "$HOME/.config/xsettingsd/xsettingsd.conf" || { echo "[!] Failed to link xsettingsd config (2). Exiting."; exit 1; }
 ln -s "$HOME/.config/hypr/gtk/gtk-3.0/settings.ini" "$HOME/.config/gtk-3.0/settings.ini" || { echo "[!] Failed to link gtk-3 config (2). Exiting."; exit 1; }
 
-gsettings set org.gnome.desktop.interface gtk-theme "catppuccin-mocha-teal-standard+default"
-
-# Install firefox
-sudo pacman --noconfirm --needed -S firefox || { echo "[!] Failed to install firefox. Exiting."; exit 1; }
+# Apply theme
+source "$HOME/.config/hypr/scripts/gtktheme"
 
 # Install optional other software
 sudo pacman --noconfirm --needed -S gparted gimp libreoffice-still obsidian syncthing vlc || { echo "[!] Failed to install optional software (1). Exiting."; exit 1; }

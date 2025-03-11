@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# Copyright (C) 2025 choozn
+# Powermenu script
 
 echo \
 'Suspend   | loginctl lock-session ${XDG_SESSION_ID-} & systemctl suspend

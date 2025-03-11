@@ -4,6 +4,7 @@
 if [ "$1" == "-f" ]; then
 	shift
 	alacritty --class 'alacritty-float,alacritty-float' $@
+
 # Fullscreen window
 elif [ "$1" == "-F" ]; then
 	shift
@@ -11,6 +12,7 @@ elif [ "$1" == "-F" ]; then
 			  -o window.startup_mode="'Fullscreen'" \
 			  window.padding.x=30 window.padding.y=30 \
 			  font.size=14 $@
+
 # Default window
 else
 	alacritty $@
