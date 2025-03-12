@@ -180,14 +180,76 @@ fi
 # Install other dependencies
 sudo pacman --noconfirm --needed -S man-db xclip wl-clipboard htop powertop fzf fd ffmpeg mpc mpd networkmanager bluez bluetui systemctl-tui mate-polkit pulseaudio thunar thunar-archive-plugin tmux viewnior wireguard-tools xarchiver zip unzip unrar 7zip openvpn ranger || { echo "[!] Failed to install dependency packages. Exiting."; exit 1; }
 
+echo ""
+
 # Activate NetworkManager and Bluetooth
-sudo systemctl enable NetworkManager
-sudo systemctl start NetworkManager
-sudo systemctl enable bluetooth.service
-sudo systemctl start bluetooth.service
+detect_init() {
+    if command -v systemctl >/dev/null 2>&1; then
+        echo "systemd"
+    elif command -v rc-service >/dev/null 2>&1; then
+        echo "openrc"
+    elif [ -d "/etc/init.d" ] && [ -f "/sbin/init" ] && ! command -v rc-service >/dev/null 2>&1; then
+        echo "sysvinit"
+    elif command -v sv >/dev/null 2>&1 && [ -d "/var/service" ]; then
+        echo "runit"
+    elif command -v s6-svc >/dev/null 2>&1; then
+        echo "s6"
+    elif command -v dinitctl >/dev/null 2>&1; then
+        echo "dinit"
+    else
+        echo "unknown"
+    fi
+}
+
+INIT_SYSTEM=$(detect_init)
+
+case "$INIT_SYSTEM" in
+    systemd)
+        sudo systemctl enable NetworkManager
+        sudo systemctl start NetworkManager
+        sudo systemctl enable bluetooth.service
+        sudo systemctl start bluetooth.service
+        ;;
+    openrc)
+        sudo rc-update add NetworkManager default
+        sudo rc-service NetworkManager start
+        sudo rc-update add bluetooth default
+        sudo rc-service bluetooth start
+        ;;
+    sysvinit)
+        sudo update-rc.d NetworkManager defaults
+        sudo /etc/init.d/NetworkManager start
+        sudo update-rc.d bluetooth defaults
+        sudo /etc/init.d/bluetooth start
+        ;;
+    runit)
+        sudo ln -s /etc/sv/NetworkManager /var/service/
+        sudo sv start NetworkManager
+        sudo ln -s /etc/sv/bluetooth /var/service/
+        sudo sv start bluetooth
+        ;;
+    s6)
+        sudo s6-rc-bundle-update -c /etc/s6-rc/default add NetworkManager
+        sudo s6-rc-bundle-update -c /etc/s6-rc/default add bluetooth
+        sudo s6-svc -u /run/service/NetworkManager
+        sudo s6-svc -u /run/service/bluetooth
+        ;;
+    dinit)
+        sudo dinitctl enable NetworkManager
+        sudo dinitctl start NetworkManager
+        sudo dinitctl enable bluetooth
+        sudo dinitctl start bluetooth
+        ;;
+    *)
+        echo "[!] Unsupported or unknown init system. Activate NetworkManager and Bluetooth on your own."
+        exit 1
+        ;;
+esac
+
+echo -e "[!] Services started and enabled for $INIT_SYSTEM.\n"
 
 # Complete Installation
-echo -e "\n[!] Installation of main dependencies successful!\n"
+echo -e "[!] Installation of main dependencies successful!\n"
 
 # Start Hyprland
 if [[ "$XDG_CURRENT_DESKTOP" != "Hyprland" ]]; then
