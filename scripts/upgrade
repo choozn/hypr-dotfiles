@@ -3,7 +3,21 @@
 # System update script
 
 # Start system update
-echo "[!] Starting a system update."
+cat << "EOF"
+
+  ,-.       _,---._ __  / \
+ /  )    .-'       `./ /   \
+(  (   ,'            `/    /|
+ \  `-"             \'\   / |
+  `.              ,  \ \ /  |
+   /`.          ,'-`----Y   |    Time for an update, don't you think so?
+  (            ;        |   '
+  |  ,-.    ,-'         |  /
+  |  | (   |            | /
+  )  |  \  `.___________|/
+  `--'   `--'
+
+EOF
 
 if command -v topgrade &> /dev/null; then
   topgrade
