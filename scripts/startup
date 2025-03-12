@@ -28,3 +28,7 @@ fi
 
 # Start mpd
 exec mpd &
+
+if [ ! -f "$HOME/.config/hypr/first.start" ]; then
+	alacritty --class "alacritty-float,alacritty-float" -e zsh -i -c "$HOME/.config/hypr/scripts/upgrade" &
+fi

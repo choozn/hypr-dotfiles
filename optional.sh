@@ -5,6 +5,11 @@
 # Remove autostart of this script
 sed -i '/exec-once = alacritty --class "alacritty-float,alacritty-float" -e zsh -i -c "~\/.config\/hypr\/optional.sh; exec zsh"/d' "$HOME/.config/hypr/hyprland.conf"
 
+# Remove flag file for first start
+if [ -f "$HOME/.config/hypr/first.start" ]; then
+    rm "$HOME/.config/hypr/first.start" || { echo "[!] Failed to remove flag file. Exiting."; exit 1; }
+fi
+
 cat << "EOF"
  _._     _,-'""`-._
 (,-.`._,'(       |\`-/|

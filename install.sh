@@ -253,6 +253,7 @@ echo -e "[!] Installation of main dependencies successful!\n"
 
 # Start Hyprland
 if [[ "$XDG_CURRENT_DESKTOP" != "Hyprland" ]]; then
+    touch "$HOME/.config/hypr/first.start" 
     echo -e 'exec-once = alacritty --class "alacritty-float,alacritty-float" -e zsh -i -c "~/.config/hypr/optional.sh; exec zsh"' >> "$HOME/.config/hypr/hyprland.conf"
     Hyprland &
 else
