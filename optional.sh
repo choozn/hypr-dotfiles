@@ -14,7 +14,7 @@ cat << "EOF"
 EOF
 
 echo "[!] There are still some packages missing that would enrich your experience."
-echo "[!] This includes AUR packages and themes. It is recommended to install them."
+echo "[!] This includes AUR packages and themes. It's recommended to install them."
 
 read -p "[?] Should I install them for you? (y/n) " answer
 answer=${answer:-y}
