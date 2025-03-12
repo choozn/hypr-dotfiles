@@ -73,11 +73,12 @@ source "$HOME/.config/hypr/scripts/gtktheme"
 sudo pacman --noconfirm --needed -S filelight gimp libreoffice-still obsidian syncthing vlc || { echo "[!] Failed to install optional software (1). Exiting."; exit 1; }
 yay --noconfirm --needed -S nwg-look || { echo "[!] Failed to install optional software (2). Exiting."; exit 1; }
 
-echo -e "[!] Installation successful!\n"
+echo -e "\n[!] Installation successful!"
 
 cat << "EOF"
 
  /\_/\  
 ( ^w^ )  All done! Your setup is nice and cozy now! See you arround!
  > ^ <  
+
 EOF

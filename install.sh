@@ -31,6 +31,7 @@ echo -e "[!] Don't worry, I'm a well-behaved kitty! No messes, just magic.\n"
 
 # Request sudo privileges
 sudo -v || { echo "[!] Failed to gain sudo access."; exit 1; }
+echo ""
 
 # Create .config directory
 if [ ! -d "$HOME/.config" ]; then
@@ -77,7 +78,7 @@ if [ -d "$HOME/.config/alacritty" ]; then
     cp -r "$HOME/.config/alacritty/" "$backup_path/alacritty/" || { echo "[!] Failed to backup alacritty config files. Exiting."; exit 1; }
 fi
 
-echo "[!] The backup of previous config files has finished."
+echo -e "[!] The backup of previous config files has finished.\n"
 
 # Update pacman database and do a system update
 sudo pacman --noconfirm -Syyu || { echo "[!] Failed to run system update with pacman. Exiting."; exit 1; }
@@ -186,7 +187,7 @@ sudo systemctl enable bluetooth.service
 sudo systemctl start bluetooth.service
 
 # Complete Installation
-echo "[!] Installation of main dependencies successful!"
+echo -e "\n[!] Installation of main dependencies successful!\n"
 
 # Start Hyprland
 if [[ "$XDG_CURRENT_DESKTOP" != "Hyprland" ]]; then
