@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# Copyright (C) 2025 choozn
+# Systemd service manager script
 
 unset COLORTERM
 TERM=xterm-old systemctl-tui

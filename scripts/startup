@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# Copyright (C) 2025 choozn
+# Startup script
 
 _ps=(waybar mako)
 for _prs in "${_ps[@]}"; do
@@ -7,7 +9,7 @@ for _prs in "${_ps[@]}"; do
 	fi
 done
 
-# Polkit agent
+# Start polkit agent
 if [[ ! `pidof polkit-mate-authentication-agent-1` ]]; then
 	/usr/lib/mate-polkit/polkit-mate-authentication-agent-1 &
 fi
@@ -18,7 +20,7 @@ fi
 # Apply theme
 ~/.config/hypr/scripts/gtktheme &
 
-# Lauch notification daemon (mako)
+# Lauch notification daemon
 ~/.config/hypr/scripts/notifications &
 
 # Lauch waybar

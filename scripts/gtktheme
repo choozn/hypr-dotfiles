@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
+# Copyright (C) 2025 choozn
+# GTK theme script
 
 gsettings set org.gnome.desktop.interface gtk-theme "catppuccin-mocha-teal-standard+default"

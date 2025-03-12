@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# Copyright (C) 2025 choozn
+# Bluetooth Manager script
 
 unset COLORTERM
 TERM=xterm-old bluetui

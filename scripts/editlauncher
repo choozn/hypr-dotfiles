@@ -1,4 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# Copyright (C) 2025 choozn
+# Fuzzy Edit script
+
 file="$(fzf)"
 if [[ -n "$file" ]]; then
   nvim "$file"
