@@ -44,10 +44,8 @@ yay --noconfirm -Syu || { echo "[!] Failed to run system update with yay. Exitin
 # Install firefox
 sudo pacman --noconfirm --needed -S firefox || { echo "[!] Failed to install firefox. Exiting."; exit 1; }
 
-# Install topgrade and autostart it on startup
+# Install topgrade
 yay --noconfirm --needed -S topgrade-bin || { echo "[!] Failed to install topgrade. Exiting."; exit 1; }
-# TODO: If not already in config file
-echo -e 'exec-once = alacritty --class "alacritty-float,alacritty-float" -e zsh -i -c "topgrade; exec zsh"' >> "$HOME/.config/hypr/hyprland.conf"
 
 # Install Catppuccin GTK Theme
 yay --noconfirm --needed -S catppuccin-gtk-theme-mocha || { echo "[!] Failed to install catppuccin-gtk-theme. Exiting."; exit 1; }
@@ -78,6 +76,7 @@ yay --noconfirm --needed -S nwg-look || { echo "[!] Failed to install optional s
 echo -e "[!] Installation successful!\n"
 
 cat << "EOF"
+
  /\_/\  
 ( ^w^ )  All done! Your setup is nice and cozy now! See you arround!
  > ^ <  

@@ -122,5 +122,9 @@ alias ga='git add'
 alias gc='git commit -m'
 alias gp='git push origin master'
 
+# Other binds
+alias upgrade='$HOME/.config/hypr/scripts/upgrade'
+alias update='$HOME/.config/hypr/scripts/upgrade'
+
 # Vim input
 set -o vi

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Start system update
+echo "[!] Starting a system update."
+
+if command -v topgrade &> /dev/null; then
+  topgrade
+elif command -v yay &> /dev/null; then
+  yay
+else
+  sudo pacman -Syu
+fi; 
+
+exec zsh
