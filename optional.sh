@@ -46,9 +46,6 @@ command -v yay >/dev/null 2>&1 || {
 
 yay --noconfirm -Syu || { echo "[!] Failed to run system update with yay. Exiting."; exit 1; }
 
-# Install firefox
-sudo pacman --noconfirm --needed -S firefox || { echo "[!] Failed to install firefox. Exiting."; exit 1; }
-
 # Install topgrade
 yay --noconfirm --needed -S topgrade-bin || { echo "[!] Failed to install topgrade. Exiting."; exit 1; }
 
@@ -74,9 +71,8 @@ ln -s "$HOME/.config/hypr/gtk/gtk-3.0/settings.ini" "$HOME/.config/gtk-3.0/setti
 # Apply theme
 source "$HOME/.config/hypr/scripts/gtktheme"
 
-# Install optional other software
-sudo pacman --noconfirm --needed -S filelight gimp libreoffice-still obsidian syncthing vlc || { echo "[!] Failed to install optional software (1). Exiting."; exit 1; }
-yay --noconfirm --needed -S nwg-look || { echo "[!] Failed to install optional software (2). Exiting."; exit 1; }
+#  Install nwg-look
+yay --noconfirm --needed -S nwg-look || { echo "[!] Failed to install nwg-look. Exiting."; exit 1; }
 
 echo -e "\n[!] Installation successful!"
 
