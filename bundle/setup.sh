@@ -9,7 +9,11 @@ sudo -v || { echo "[!] Failed to gain sudo access."; exit 1; }
 echo ""
 
 # Install optional other software
-sudo pacman --noconfirm --needed -S thunar thunar-archive-plugin firefox filelight gimp libreoffice-still obsidian syncthing vlc || { echo "[!] Failed to install optional software. Exiting."; exit 1; }
-echo ""
+sudo pacman --noconfirm --needed -S thunar thunar-archive-plugin filelight gimp libreoffice-still obsidian syncthing vlc || { echo "[!] Failed to install optional software (1). Exiting."; exit 1; }
+yay --noconfirm --needed -S zen-browser-bin || { echo "[!] Failed to install optional software (2). Exiting."; exit 1; }
 
-echo -e "[!] Installation successful!"
+systemctl --user enable syncthing
+systemctl --user start syncthing
+zen-browser "localhost:8384"
+
+echo -e "\n[!] Installation successful!"
