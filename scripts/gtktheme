@@ -2,4 +2,5 @@
 # Copyright (C) 2025 choozn
 # GTK theme script
 
-gsettings set org.gnome.desktop.interface gtk-theme "catppuccin-mocha-teal-standard+default"
+theme=$(awk -F= '/^\$gtk_theme/ {gsub(/^[ \t]+|[ \t]+$/, "", $2); print $2}' "$HOME/.config/hypr/hyprtheme.conf")
+gsettings set org.gnome.desktop.interface gtk-theme "$theme"
