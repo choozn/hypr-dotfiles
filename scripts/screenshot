@@ -2,7 +2,7 @@
 # Copyright (C) 2025 choozn
 # Screenshot script
 
-show_notification(message) {
+show_notification() {
 	notify-send -h string:x-canonical-private-synchronous:hypr-cfg -u low message "Screenshot copied to your clipboard"
 }
 
