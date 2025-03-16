@@ -6,5 +6,5 @@ CONFIG_FILE="$HOME/.config/hypr/waybar/config"
 STYLE_FILE="$HOME/.config/hypr/waybar/style.css"
 
 if [[ ! `pidof waybar` ]]; then
-	waybar --bar main-bar --log-level error --config ${CONFIG_FILE} --style ${STYLE_FILE}
+	waybar --bar main-bar --log-level error --config "${CONFIG_FILE}" --style "${STYLE_FILE}"
 fi
