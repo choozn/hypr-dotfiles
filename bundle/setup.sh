@@ -14,6 +14,6 @@ yay --noconfirm --needed -S zen-browser-bin || { echo "[!] Failed to install opt
 
 systemctl --user enable syncthing
 systemctl --user start syncthing
-zen-browser "localhost:8384"
+syncthing --browser-only
 
 echo -e "\n[!] Installation successful!"
