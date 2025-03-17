@@ -79,6 +79,11 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
+# Activate NVM and Node
+if [ -f ~/.nvm/nvm.sh ]; then
+  source ~/.nvm/nvm.sh
+fi
+
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
