@@ -18,7 +18,7 @@ cat << "EOF"
          
 EOF
 
-echo "[!] There are still some packages missing that would enrich your experience."
+echo "[!] There are still some packages missing to make your system functional."
 echo "[!] This includes AUR packages and themes. It's recommended to install them."
 
 read -p "[?] Should I install them for you? (y/n) " answer
@@ -71,8 +71,8 @@ ln -s "$HOME/.config/hypr/gtk/gtk-3.0/settings.ini" "$HOME/.config/gtk-3.0/setti
 # Apply theme
 source "$HOME/.config/hypr/scripts/gtktheme"
 
-#  Install nwg-look
-yay --noconfirm --needed -S nwg-look || { echo "[!] Failed to install nwg-look. Exiting."; exit 1; }
+#  Install nwg-look and nwg-displays
+yay --noconfirm --needed -S nwg-look nwg-displays || { echo "[!] Failed to install nwg-look. Exiting."; exit 1; }
 
 echo -e "\n[!] Installation successful!"
 

@@ -104,12 +104,14 @@ git clone --depth=1 --branch=master $repository || { echo "[!] Failed to clone d
 
 # Create .config/hypr directory if its missing
 if [ ! -d "$HOME/.config/hypr" ]; then
-    mkdir "$HOME/.config/hypr" || { echo "[!] Failed to create .config/hypr directory. Exiting."; exit 1; }
+    mkdir -p "$HOME/.config/hypr" || { echo "[!] Failed to create .config/hypr directory. Exiting."; exit 1; }
 fi
 
 # Copy hyprland folder
 find "./$folder" -maxdepth 1 -mindepth 1 -print0 | xargs -0 cp -rf -t "$HOME/.config/hypr/" || { echo "[!] Failed to copy Hyprland configuration. Exiting."; exit 1; }
 sudo chmod +x $HOME/.config/hypr/optional.sh
+touch $HOME/.config/hypr/monitors.conf
+touch $HOME/.config/hypr/workspaces.conf
 
 # Cleanup installation directory
 cd ..
@@ -178,7 +180,7 @@ if [ ! -L "$HOME/.config/alacritty" ]; then
 fi
 
 # Install other dependencies
-sudo pacman --noconfirm --needed -S brightnessctl mako grim slurp man-db xclip wl-clipboard htop powertop fzf fd ffmpeg mpc mpd networkmanager bluez bluetui systemctl-tui mate-polkit pulseaudio pulsemixer tmux viewnior wireguard-tools wget xarchiver zip unzip unrar 7zip openvpn ranger || { echo "[!] Failed to install dependency packages. Exiting."; exit 1; }
+sudo pacman --noconfirm --needed -S brightnessctl mako grim slurp man-db xclip wl-clipboard htop powertop fzf fd ffmpeg mpc mpd networkmanager network-manager-applet bluez bluetui systemctl-tui mate-polkit pulseaudio pulsemixer tmux viewnior wireguard-tools wget xarchiver zip unzip unrar 7zip openvpn ranger || { echo "[!] Failed to install dependency packages. Exiting."; exit 1; }
 
 echo ""
 
