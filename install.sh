@@ -125,7 +125,7 @@ fi
 # Reference: https://github.com/swaywm/swaybg
 # Reference: https://wiki.hyprland.org/Useful-Utilities/Must-have/
 # Reference: https://wiki.hyprland.org/Hypr-Ecosystem/xdg-desktop-portal-hyprland/
-sudo pacman --noconfirm --needed -S aquamarine hyprland hyprlang hyprcursor hyprutils hyprgraphics hypridle hyprlock hyprpicker hyprwayland-scanner waybar swaybg wayland-utils qt5-wayland qt6-wayland xdg-desktop-portal-hyprland pipewire uwsm || { echo "[!] Failed to install Hyprland packages. Exiting."; exit 1; }
+sudo pacman --noconfirm --needed -S aquamarine hyprland hyprlang hyprcursor hyprutils hyprgraphics hypridle hyprlock hyprpicker hyprwayland-scanner waybar swaybg wayland-utils qt5-wayland qt6-wayland xdg-desktop-portal-hyprland pipewire wireplumber uwsm || { echo "[!] Failed to install Hyprland packages. Exiting."; exit 1; }
 
 # Install Fonts
 sudo pacman --noconfirm --needed -S ttf-jetbrains-mono ttf-jetbrains-mono-nerd noto-fonts inter-font || { echo "[!] Failed to install Fonts. Exiting."; exit 1; }
