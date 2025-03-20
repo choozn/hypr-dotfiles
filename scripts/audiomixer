@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Copyright (C) 2025 choozn
+# Pulsemixer script
+
+unset COLORTERM
+TERM=xterm-old pulsemixer
