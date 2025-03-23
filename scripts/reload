@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Copyright (C) 2025 choozn
+# Live reload script
+
+hyprctl reload
+source $HOME/.config/hypr/scripts/wallpaper
+pkill waybar && hyprctl dispatch exec $HOME/.config/hypr/scripts/waybar

@@ -133,3 +133,7 @@ alias update='$HOME/.config/hypr/scripts/upgrade'
 
 # Vim input
 set -o vi
+
+# Turn off colorterm for transparency
+unset COLORTERM
+export TERM=xterm-old
