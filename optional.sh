@@ -71,8 +71,11 @@ ln -s "$HOME/.config/hypr/gtk/gtk-3.0/settings.ini" "$HOME/.config/gtk-3.0/setti
 # Apply theme
 source "$HOME/.config/hypr/scripts/gtktheme"
 
-#  Install nwg-look and nwg-displays
+# Install nwg-look and nwg-displays
 yay --noconfirm --needed -S nwg-look nwg-displays || { echo "[!] Failed to install nwg-look. Exiting."; exit 1; }
+
+# Install firmware software 
+sudo pacman --noconfirm --needed -S fwupd gnome-firmware || { echo "[!] Failed to install fwupd and gnome-firmware. Exiting."; exit 1; }
 
 echo -e "\n[!] Installation successful!"
 
