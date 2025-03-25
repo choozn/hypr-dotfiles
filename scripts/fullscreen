@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Copyright (C) 2025 choozn
+# Close active fullscreen script
+
+fullscreen="$(hyprctl -j activewindow | jq -r '.fullscreen')"
+if [[ "$fullscreen" = "2" ]]; then
+    hyprctl dispatch fullscreen 0
+fi

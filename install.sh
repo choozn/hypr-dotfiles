@@ -180,7 +180,7 @@ if [ ! -L "$HOME/.config/alacritty" ]; then
 fi
 
 # Install other dependencies
-sudo pacman --noconfirm --needed -S brightnessctl mako grim slurp man-db xclip wl-clipboard htop powertop fzf fd ffmpeg mpc mpd networkmanager network-manager-applet bluez bluetui systemctl-tui mate-polkit pipewire pipewire-audio pipewire-pulse pipewire-jack pipewire-alsa wireplumber pulsemixer alsa-utils helvum tmux viewnior wireguard-tools wget xarchiver zip unzip unrar 7zip openvpn ranger || { echo "[!] Failed to install dependency packages. Exiting."; exit 1; }
+sudo pacman --noconfirm --needed -S brightnessctl mako grim slurp man-db xclip wl-clipboard htop powertop fzf fd ffmpeg mpc mpd networkmanager network-manager-applet bluez bluetui systemctl-tui mate-polkit pipewire pipewire-audio pipewire-pulse pipewire-jack pipewire-alsa wireplumber pulsemixer alsa-utils helvum tmux viewnior wireguard-tools wget xarchiver zip unzip unrar 7zip openvpn ranger jq || { echo "[!] Failed to install dependency packages. Exiting."; exit 1; }
 echo ""
 
 # Activate NetworkManager and Bluetooth
