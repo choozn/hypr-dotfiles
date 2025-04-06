@@ -20,7 +20,7 @@ cat << "EOF"
 EOF
 
 if command -v topgrade &> /dev/null; then
-  topgrade
+  topgrade --no-self-update
 elif command -v yay &> /dev/null; then
   yay
 else
