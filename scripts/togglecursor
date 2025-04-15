@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Copyright (C) 2025 choozn
+# Cursor hide toggle script
+
+current_timeout="$(hyprctl getoption cursor:inactive_timeout | grep float: | cut --d ":" -f2 | xargs)"
+if [[ "$current_timeout" = "0.300000" ]]; then
+  hyprctl reload 
+else
+  hyprctl keyword cursor:inactive_timeout 0.3
+fi
