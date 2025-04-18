@@ -2,6 +2,12 @@
 # Copyright (C) 2025 choozn
 # Live reload script
 
+# Reload hyprland
 hyprctl reload
+
+# Reload wallpaper
 source $HOME/.config/hypr/scripts/wallpaper
-pkill waybar && hyprctl dispatch exec $HOME/.config/hypr/scripts/waybar
+
+# Restart waybar
+pkill waybar &
+hyprctl dispatch exec $HOME/.config/hypr/scripts/waybar &
