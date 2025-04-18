@@ -15,7 +15,7 @@ cat << "EOF"
 (,-.`._,'(       |\`-/|
     `-.-' \ )-`( , o o)
           `-    \`_`"'-  Meow! Welcome (back), human!
-         
+
 EOF
 
 echo "[!] There are still some packages missing to make your system functional."
@@ -74,15 +74,15 @@ source "$HOME/.config/hypr/scripts/gtktheme"
 # Install nwg-look and nwg-displays
 yay --noconfirm --needed -S nwg-look nwg-displays || { echo "[!] Failed to install nwg-look. Exiting."; exit 1; }
 
-# Install firmware software 
+# Install firmware software
 sudo pacman --noconfirm --needed -S fwupd gnome-firmware || { echo "[!] Failed to install fwupd and gnome-firmware. Exiting."; exit 1; }
 
 echo -e "\n[!] Installation successful!"
 
 cat << "EOF"
 
- /\_/\  
+ /\_/\
 ( ^w^ )  All done! Your setup is nice and cozy now! See you arround!
- > ^ <  
+ > ^ <
 
 EOF

@@ -3,7 +3,11 @@
 # Installation script for astrovim
 # Reference: https://docs.astronvim.com/#-installation
 
-# Make a backup of current nvim config 
+# Set global editorconfig
+ln -s ~/.config/hypr/nvim/.editorconfig "$HOME/.editorconfig"
+ln -s ~/.config/hypr/nvim/.clang-format "$HOME/.clang-format"
+
+# Make a backup of current nvim config
 mv ~/.config/nvim ~/.config/nvim.bak
 
 # Clean neovim folders
