@@ -1,7 +1,8 @@
 #!/bin/bash
 # Copyright (C) 2025 choozn
 # Installation script for my dotfiles
-# It is recommended to install on a fresh installation of Arch Linux
+# It is recommended to install on a fresh installation of Arch Linux using systemd.
+# Using a different init system might lead to unwanted problems.
 #
 # To install in one line, run the following command:
 # curl -Ls hypr.choozn.dev | bash
@@ -20,7 +21,7 @@ fi
 clear
 cat << "EOF"
 
- /\_/\  
+ /\_/\
 ( o.o )  Meow! I'm whisker and I'll help you to make this place feel like home!.
  > ^ <          Let's get those dotfiles and dependencies installed!
 
@@ -60,7 +61,7 @@ if [ -f "$HOME/.config/gtk-3.0/settings.ini" ]; then
     cp "$HOME/.config/gtk-3.0/settings.ini" "$backup_path/gtk-3.0/" || { echo "[!] Failed to backup gtk-3/settings.ini config. Exiting."; exit 1; }
 fi
 
-# Backup xsettingsd.conf 
+# Backup xsettingsd.conf
 if [ -f "$HOME/.config/xsettingsd/xsettingsd.conf" ]; then
     mkdir -p "$backup_path/xsettingsd/"
     cp "$HOME/.config/xsettingsd/xsettingsd.conf" "$backup_path/xsettingsd/" || { echo "[!] Failed to backup xsettingsd config. Exiting."; exit 1; }
@@ -100,7 +101,7 @@ fi
 cd "hyprinstall"
 
 # Copy repository
-git clone --depth=1 --branch=master $repository || { echo "[!] Failed to clone dotfiles. Exiting."; exit 1; } 
+git clone --depth=1 --branch=master $repository || { echo "[!] Failed to clone dotfiles. Exiting."; exit 1; }
 
 # Create .config/hypr directory if its missing
 if [ ! -d "$HOME/.config/hypr" ]; then
@@ -180,81 +181,23 @@ if [ ! -L "$HOME/.config/alacritty" ]; then
 fi
 
 # Install other dependencies
-sudo pacman --noconfirm --needed -S brightnessctl mako grim slurp man-db xclip wl-clipboard htop powertop fzf fd ffmpeg mpc mpd networkmanager network-manager-applet bluez bluetui blueman systemctl-tui mate-polkit pipewire pipewire-audio pipewire-pulse pipewire-jack pipewire-alsa wireplumber pulsemixer alsa-utils helvum tmux viewnior wireguard-tools wget xarchiver zip unzip unrar 7zip openvpn ranger jq wev thunar gvfs thunar-volman thunar-archive-plugin|| { echo "[!] Failed to install dependency packages. Exiting."; exit 1; }
+sudo pacman --noconfirm --needed -S brightnessctl mako grim slurp man-db xclip wl-clipboard htop powertop fzf fd ffmpeg mpc mpd networkmanager network-manager-applet bluez bluetui blueman systemctl-tui mate-polkit pipewire pipewire-audio pipewire-pulse pipewire-jack pipewire-alsa wireplumber pulsemixer alsa-utils helvum tmux viewnior wireguard-tools wget xarchiver zip unzip unrar 7zip openvpn ranger jq wev thunar gvfs thunar-volman thunar-archive-plugin || { echo "[!] Failed to install dependency packages. Exiting."; exit 1; }
 echo ""
 
 # Activate NetworkManager and Bluetooth
-detect_init() {
-    if command -v systemctl >/dev/null 2>&1; then
-        echo "systemd"
-    elif command -v rc-service >/dev/null 2>&1; then
-        echo "openrc"
-    elif [ -d "/etc/init.d" ] && [ -f "/sbin/init" ] && ! command -v rc-service >/dev/null 2>&1; then
-        echo "sysvinit"
-    elif command -v sv >/dev/null 2>&1 && [ -d "/var/service" ]; then
-        echo "runit"
-    elif command -v s6-svc >/dev/null 2>&1; then
-        echo "s6"
-    elif command -v dinitctl >/dev/null 2>&1; then
-        echo "dinit"
-    else
-        echo "unknown"
-    fi
-}
+sudo systemctl enable NetworkManager
+sudo systemctl start NetworkManager
+sudo systemctl enable bluetooth.service
+sudo systemctl start bluetooth.service
 
-INIT_SYSTEM=$(detect_init)
-
-case "$INIT_SYSTEM" in
-    systemd)
-        sudo systemctl enable NetworkManager
-        sudo systemctl start NetworkManager
-        sudo systemctl enable bluetooth.service
-        sudo systemctl start bluetooth.service
-        ;;
-    openrc)
-        sudo rc-update add NetworkManager default
-        sudo rc-service NetworkManager start
-        sudo rc-update add bluetooth default
-        sudo rc-service bluetooth start
-        ;;
-    sysvinit)
-        sudo update-rc.d NetworkManager defaults
-        sudo /etc/init.d/NetworkManager start
-        sudo update-rc.d bluetooth defaults
-        sudo /etc/init.d/bluetooth start
-        ;;
-    runit)
-        sudo ln -s /etc/sv/NetworkManager /var/service/
-        sudo sv start NetworkManager
-        sudo ln -s /etc/sv/bluetooth /var/service/
-        sudo sv start bluetooth
-        ;;
-    s6)
-        sudo s6-rc-bundle-update -c /etc/s6-rc/default add NetworkManager
-        sudo s6-rc-bundle-update -c /etc/s6-rc/default add bluetooth
-        sudo s6-svc -u /run/service/NetworkManager
-        sudo s6-svc -u /run/service/bluetooth
-        ;;
-    dinit)
-        sudo dinitctl enable NetworkManager
-        sudo dinitctl start NetworkManager
-        sudo dinitctl enable bluetooth
-        sudo dinitctl start bluetooth
-        ;;
-    *)
-        echo "[!] Unsupported or unknown init system. Activate NetworkManager and Bluetooth on your own."
-        exit 1
-        ;;
-esac
-
-echo -e "[!] Services started and enabled for $INIT_SYSTEM.\n"
+echo -e "[!] Services started and enabled.\n"
 
 # Complete Installation
 echo -e "[!] Installation of main dependencies successful!\n"
 
 # Start Hyprland
 if [[ "$XDG_CURRENT_DESKTOP" != "Hyprland" ]]; then
-    touch "$HOME/.config/hypr/first.start" 
+    touch "$HOME/.config/hypr/first.start"
     echo -e 'exec-once = alacritty --class "alacritty-float,alacritty-float" -e zsh -i -c "~/.config/hypr/optional.sh; exec zsh"' >> "$HOME/.config/hypr/hyprland.conf"
     Hyprland &
 else
