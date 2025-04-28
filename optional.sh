@@ -2,14 +2,6 @@
 # Copyright (C) 2025 choozn
 # Installation script for optional software
 
-# Remove autostart of this script
-sed -i '/exec-once = alacritty --class "alacritty-float,alacritty-float" -e zsh -i -c "~\/.config\/hypr\/optional.sh; exec zsh"/d' "$HOME/.config/hypr/hyprland.conf"
-
-# Remove flag file for first start
-if [ -f "$HOME/.config/hypr/first.start" ]; then
-    rm "$HOME/.config/hypr/first.start" || { echo "[!] Failed to remove flag file. Exiting."; exit 1; }
-fi
-
 cat << "EOF"
  _._     _,-'""`-._
 (,-.`._,'(       |\`-/|
@@ -25,6 +17,15 @@ read -p "[?] Should I install them for you? (y/n) " answer
 answer=${answer:-y}
 if [[ "$answer" != "y" && "$answer" != "Y" ]]; then
     echo "[!] Alright, maybe next time. Take care!"
+
+    # Remove autostart of this script
+    sed -i '/exec-once = alacritty --class "alacritty-float,alacritty-float" -e zsh -i -c "~\/.config\/hypr\/optional.sh; exec zsh"/d' "$HOME/.config/hypr/hyprland.conf"
+
+    # Remove flag file for first start
+    if [ -f "$HOME/.config/hypr/first.start" ]; then
+        rm "$HOME/.config/hypr/first.start" || { echo "[!] Failed to remove flag file. Exiting."; exit 1; }
+    fi
+
     exit 0
 fi
 
@@ -76,6 +77,14 @@ yay --noconfirm --needed -S nwg-look nwg-displays || { echo "[!] Failed to insta
 
 # Install firmware software
 sudo pacman --noconfirm --needed -S fwupd gnome-firmware || { echo "[!] Failed to install fwupd and gnome-firmware. Exiting."; exit 1; }
+
+# Remove autostart of this script
+sed -i '/exec-once = alacritty --class "alacritty-float,alacritty-float" -e zsh -i -c "~\/.config\/hypr\/optional.sh; exec zsh"/d' "$HOME/.config/hypr/hyprland.conf"
+
+# Remove flag file for first start
+if [ -f "$HOME/.config/hypr/first.start" ]; then
+    rm "$HOME/.config/hypr/first.start" || { echo "[!] Failed to remove flag file. Exiting."; exit 1; }
+fi
 
 echo -e "\n[!] Installation successful!"
 
