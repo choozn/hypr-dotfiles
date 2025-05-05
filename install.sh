@@ -120,6 +120,9 @@ if [ -d "hyprinstall" ]; then
     rm -rf "hyprinstall" || { echo "[!] Failed to delete installation directory. Exiting."; exit 1; }
 fi
 
+# Install Audio Utils
+sudo pacman --noconfirm --needed -S pipewire pipewire-jack pipewire-audio pipewire-pulse pipewire-alsa wireplumber pulsemixer alsa-utils || { echo "[!] Failed to install Pipewire packages. Exiting."; exit 1; }
+
 # Install Hyprland and other Hyprtools
 # Reference: https://wiki.hyprland.org/Getting-Started/Installation/
 # Reference: https://github.com/Alexays/Waybar/wiki/Installation
@@ -181,7 +184,7 @@ if [ ! -L "$HOME/.config/alacritty" ]; then
 fi
 
 # Install other dependencies
-sudo pacman --noconfirm --needed -S brightnessctl mako grim slurp man-db xclip wl-clipboard htop powertop fzf fd ffmpeg mpc mpd networkmanager network-manager-applet bluez bluetui blueman systemctl-tui mate-polkit pipewire pipewire-audio pipewire-pulse pipewire-jack pipewire-alsa wireplumber pulsemixer alsa-utils helvum tmux viewnior wireguard-tools wget xarchiver zip unzip unrar 7zip openvpn ranger jq wev thunar gvfs thunar-volman thunar-archive-plugin || { echo "[!] Failed to install dependency packages. Exiting."; exit 1; }
+sudo pacman --noconfirm --needed -S brightnessctl mako grim slurp man-db xclip wl-clipboard htop powertop fzf fd ffmpeg mpc mpd networkmanager network-manager-applet bluez bluetui blueman systemctl-tui mate-polkit  helvum tmux viewnior wireguard-tools wget xarchiver zip unzip unrar 7zip openvpn ranger jq wev thunar gvfs thunar-volman thunar-archive-plugin || { echo "[!] Failed to install dependency packages. Exiting."; exit 1; }
 echo ""
 
 # Activate NetworkManager and Bluetooth
