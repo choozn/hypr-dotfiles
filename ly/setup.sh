@@ -20,6 +20,9 @@ fi
 # Link ly config
 sudo ln -s "$HOME/.config/hypr/ly/config.ini" "/etc/ly/config.ini" || { echo "[!] Failed to link ly config. Exiting."; exit 1; }
 
+# Copy default session
+sudo cp "$HOME/.config/hypr/ly/save.ini" "/etc/ly/save.ini"  || { echo "[!] Failed to copy default ly session. Exiting."; exit 1; }
+
 # Activate ly servie
 sudo systemctl enable ly.service
 sudo systemctl disable getty@tty2.service
