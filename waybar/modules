@@ -74,8 +74,8 @@
     "disk": {
          "interval": 30,
          "format": "󰆼 FREE: {free}"
-    },           	
-	
+    },
+
 	// waybar-memory
     "memory": {
          "interval": 10,
