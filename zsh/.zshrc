@@ -130,6 +130,7 @@ alias gp='git push origin master'
 # Other binds
 alias upgrade='$HOME/.config/hypr/scripts/upgrade'
 alias update='$HOME/.config/hypr/scripts/upgrade'
+alias zen='zen-browser'
 
 # Vim input
 set -o vi
