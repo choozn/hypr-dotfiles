@@ -9,8 +9,8 @@ sudo -v || { echo "[!] Failed to gain sudo access."; exit 1; }
 echo ""
 
 # Install optional other software
-sudo pacman --noconfirm --needed -S filelight gimp libreoffice-still obsidian syncthing vlc thunderbird || { echo "[!] Failed to install optional software (1). Exiting."; exit 1; }
-yay --noconfirm --needed -S zen-browser-bin proton-vpn-gtk-app localsend-bin || { echo "[!] Failed to install optional software (2). Exiting."; exit 1; }
+sudo pacman --noconfirm --needed -S filelight gimp libreoffice-still obsidian syncthing vlc thunderbird cheese || { echo "[!] Failed to install optional software (1). Exiting."; exit 1; }
+yay --noconfirm --needed -S zen-browser-bin proton-vpn-gtk-app localsend-bin tex-match || { echo "[!] Failed to install optional software (2). Exiting."; exit 1; }
 
 systemctl --user enable syncthing
 systemctl --user start syncthing
