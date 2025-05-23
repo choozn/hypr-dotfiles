@@ -16,4 +16,6 @@ systemctl --user enable syncthing
 systemctl --user start syncthing
 syncthing --browser-only
 
+ln -s "$HOME/.config/hypr/zathura/zathurarc" "$HOME/.config/zathura/" || { echo "[!] Failed to link zathura config. Exiting."; exit 1; }
+
 echo -e "\n[!] Installation successful!"
