@@ -132,7 +132,7 @@ sudo pacman --noconfirm --needed -S pipewire pipewire-jack pipewire-audio pipewi
 sudo pacman --noconfirm --needed -S aquamarine hyprland hyprlang hyprcursor hyprutils hyprgraphics hypridle hyprlock hyprpicker hyprwayland-scanner waybar swaybg wayland-utils qt5-wayland qt6-wayland xdg-desktop-portal-hyprland uwsm || { echo "[!] Failed to install Hyprland packages. Exiting."; exit 1; }
 
 # Install Fonts
-sudo pacman --noconfirm --needed -S ttf-jetbrains-mono ttf-jetbrains-mono-nerd noto-fonts inter-font noto-fonts-emoji || { echo "[!] Failed to install Fonts. Exiting."; exit 1; }
+sudo pacman --noconfirm --needed -S ttf-jetbrains-mono ttf-jetbrains-mono-nerd noto-fonts inter-font noto-fonts-emoji noto-fonts-cjk || { echo "[!] Failed to install Fonts. Exiting."; exit 1; }
 
 # Install and configure OhMyZsh
 # Reference: https://ohmyz.sh/#install
