@@ -2,6 +2,7 @@
 # Installation script for virt-manager and qemu
 
 sudo pacman --noconfirm --needed -S libvirt dnsmasq virt-manager qemu-full || { echo "[!] Failed to install virtualization software (1). Exiting."; exit 1; }
+sudo ln -sf "$HOME/.config/hypr/qemu/network.conf" "/etc/libvirt/network.conf"
 sudo systemctl enable libvirtd
 sudo systemctl start libvirtd
 sudo usermod -G libvirt -a $(whoami)
