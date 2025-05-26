@@ -112,6 +112,11 @@ rehash_precmd() {
 
 add-zsh-hook -Uz precmd rehash_precmd
 
+# Source nvm if installed
+if [[ -f "/usr/share/nvm/init-nvm.sh" ]]; then
+    source /usr/share/nvm/init-nvm.sh
+fi
+
 # ls
 alias l='ls -lh'
 alias ll='ls -lah'
@@ -131,6 +136,7 @@ alias gp='git push origin master'
 alias upgrade='$HOME/.config/hypr/scripts/upgrade'
 alias update='$HOME/.config/hypr/scripts/upgrade'
 alias zen='zen-browser'
+alias open='xdg-open'
 
 # Vim input
 set -o vi
@@ -138,3 +144,4 @@ set -o vi
 # Turn off colorterm for transparency; This will break a clean exit from nvim!
 # unset COLORTERM
 # export TERM=xterm-old
+
