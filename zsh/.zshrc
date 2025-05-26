@@ -114,7 +114,7 @@ add-zsh-hook -Uz precmd rehash_precmd
 
 # Source nvm if installed
 if [[ -f "/usr/share/nvm/init-nvm.sh" ]]; then
-    source /usr/share/nvm/init-nvm.sh
+    source /usr/share/nvm/init-nvm.sh  >/dev/null 2>&1
 fi
 
 # ls
