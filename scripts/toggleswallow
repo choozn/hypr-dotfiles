@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Copyright (C) 2025 choozn
+# Window swallowing toggle script
+
+current_swallow="$(hyprctl getoption misc:enable_swallow | grep int: | cut --d ":" -f2 | xargs)"
+if [[ "$current_swallow" = "0" ]]; then
+  hyprctl reload
+else
+  hyprctl keyword misc:enable_swallow false
+fi
