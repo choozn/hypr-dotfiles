@@ -145,3 +145,5 @@ set -o vi
 # unset COLORTERM
 # export TERM=xterm-old
 
+# Initialize zoxide
+eval "$(zoxide init zsh --cmd cd)"
