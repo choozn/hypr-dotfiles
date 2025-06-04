@@ -145,9 +145,11 @@ fi
 # Reference: https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md
 # Reference: https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md
 # Reference: https://github.com/zsh-users/zsh-history-substring-search
+# Reference: https://github.com/marlonrichert/zsh-autocomplete
 git clone --depth=1 --branch=master https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 git clone --depth=1 --branch=master https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 git clone --depth=1 --branch=master https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
+git clone --depth 1 -- https://github.com/marlonrichert/zsh-autocomplete.git $ZSH_CUSTOM/plugins/zsh-autocomplete
 
 # Remove old .zshrc config
 if [ -f "$HOME/.zshrc" ]; then
