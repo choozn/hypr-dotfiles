@@ -74,15 +74,25 @@ zstyle ':omz:update' mode disabled  # disable automatic updates
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 
-plugins=(git sudo vi-mode safe-paste zsh-syntax-highlighting zsh-autosuggestions zsh-history-substring-search zsh-autocomplete)
+autoload -Uz compinit
+compinit -C
+
+plugins=(
+    git
+    sudo
+    vi-mode
+    safe-paste
+    zsh-syntax-highlighting
+    zsh-autosuggestions
+    zsh-history-substring-search
+    zsh-nvm
+    zsh-lazyload
+    zsh-autocomplete
+)
+
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-
-# Activate NVM and Node
-if [ -f ~/.nvm/nvm.sh ]; then
-  source ~/.nvm/nvm.sh
-fi
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -111,11 +121,6 @@ rehash_precmd() {
 }
 
 add-zsh-hook -Uz precmd rehash_precmd
-
-# Source nvm if installed
-if [[ -f "/usr/share/nvm/init-nvm.sh" ]]; then
-    source /usr/share/nvm/init-nvm.sh  >/dev/null 2>&1
-fi
 
 # ls
 alias l='ls -lh'
@@ -147,3 +152,4 @@ set -o vi
 
 # Initialize zoxide
 eval "$(zoxide init zsh --cmd cd)"
+
